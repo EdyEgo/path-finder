@@ -1,0 +1,72 @@
+/* color palette from <https://github.com/vuejs/theme> */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Audiowide&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@layer base {
+  html {
+    font-family: 'Audiowide', system-ui, sans-serif;
+  }
+}
+
+.logo {
+  font-family: 'Audiowide', sans-serif;
+}
+
+.inputAuthBorder {
+  @apply p-[1px] bg-gradient-to-r from-[#FBB122] to-[#FB8122] rounded-md;
+}
+
+.inputAuth {
+  @apply block w-full pl-10 py-[9px] bg-gradient-to-r from-[#16191E] to-[#0F1316] text-white rounded-md;
+}
+
+.input {
+  @apply placeholder-gray-500 border-solid border border-[#ffffff33] rounded-md py-1 leading-[26px] pl-2;
+}
+
+.input.warning {
+  @apply placeholder-red-400 border-red-500;
+}
+
+.input.success {
+  @apply placeholder-green-500 border-green-500;
+}
+
+.label {
+  @apply text-gray-200 text-[12px];
+}
+
+.button.primary.outlined {
+  @apply bg-transparent border-solid border border-[#FB8122] text-[#FB8122] px-4 py-1 whitespace-nowrap rounded-md;
+}
+.button.primary.full {
+  @apply bg-[#FB8122] text-white rounded-md px-4 py-1 whitespace-nowrap;
+}
+.button.success.full {
+  @apply bg-[#28C76F] text-white rounded-md px-4 py-1 whitespace-nowrap;
+}
+.button.simple.outlined {
+  @apply bg-transparent text-white border border-solid border-gray-500 rounded-md px-4 whitespace-nowrap;
+}
+.button.warning.outlined {
+  @apply bg-transparent border-solid border border-[#CA0C00] text-[#CA0C00] rounded-md px-4 py-1 whitespace-nowrap;
+}
+.button.warning.full {
+  @apply bg-[#CA0C00] text-white rounded-md px-4 py-1 whitespace-nowrap;
+}
+
+.table {
+  @apply border-solid border border-gray-500;
+}
+.table-row {
+  @apply border border-solid border-b border-gray-500;
+}
+.table-head {
+  @apply px-2 text-[15px];
+}
+.table-data {
+  @apply py-1 text-[13px] font-light text-center;
+}
