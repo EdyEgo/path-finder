@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import { useAuth } from '@/stores/auth'
 // import LoginView from '../views/LoginView.vue'
 // import RegisterView from '../views/RegisterView.vue'
-// import HomeView from '../views/HomeView.vue'
+import HomeView from '../views/HomeView.vue'
 // import DigView from '@/views/DigView.vue'
 // import WhoIsView from '@/views/WhoIsView.vue'
 // import FreePingView from '../views/freeTools/FreePingView.vue'
@@ -17,6 +17,15 @@ import { useAuth } from '@/stores/auth'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
+
+   {
+      path: '/',
+      name: 'home',
+      component: HomeView,
+      meta: {
+        requiresAuth: true
+      }
+    }
     // {
     //   path: '/app',
     //   name: 'home',
@@ -173,7 +182,7 @@ router.beforeEach((to, from) => {
   const store = useAuth()
 
   // redirect / (root) to /ping if user is not authenticated
-  
+
   // if (to.path === '/' || to.path === '') {
   //   if (!store.isLoggedIn) {
   //     return {
