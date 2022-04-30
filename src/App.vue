@@ -5,10 +5,20 @@
       <RouterView :key="$route.fullPath" />
     </v-main>
   </v-app> -->
-  <div class="h-full bg-black h-[10000px]">hello</div>
+  <div class="h-full bg-[#A346B6] h-[10000px]">hello</div>
 </template>
 
 <script setup lang="ts">
+
+// starting point will be a ship and the destination will be a planet
+// the traps will be black holes
+// your mission program the ship to use the best alghotithm or use your own
+// obstacoles are asteroids and black holes
+
+// you can have a game with it , where you choose to not see the path that your
+// ship has gone with and place throw bomb , you win if you don t destroy your ship
+// kind of the same game as the one with the ships on the sea
+
 import { RouterView } from 'vue-router'
 import {ref} from 'vue'
 import AppBarVue from './ui/AppBar.vue';
