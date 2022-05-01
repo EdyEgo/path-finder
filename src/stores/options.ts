@@ -11,7 +11,7 @@ export const useOptions = defineStore({
        trapStatus:boolean
       }
     >{
-      wallStatus:false,
+      wallStatus:true,
       trapStatus:false
     }
   },

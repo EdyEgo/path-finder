@@ -6,6 +6,8 @@ import {useOptions} from '../stores/options'
 
 const optionsStore = useOptions()
 
+const wallsStatus = ref(optionsStore.$state.wallStatus)
+
 const rowsNumber = ref(21)
 const columnsNumber = ref(32)
 
@@ -20,6 +22,37 @@ const columnsWithObstacles = reactive
 })
 
 
+function removeObstacle(indexRow:number,indexColumn:number){ 
+
+        const indexRowString = indexRow.toString()
+    const indexColumnString = indexColumn.toString()
+
+    //  if(columnsWithObstacles[indexRowString] !== undefined && columnsWithObstacles[indexRowString][indexColumnString] !== undefined){
+    //     // remove obstacle
+      
+    //     return 
+    // }
+}
+
+function addObstacle(indexRow:number,indexColumn:number,obstacleObject:{wall:string,bomb:string}){
+    const indexRowString = indexRow.toString()
+    const indexColumnString = indexColumn.toString()
+ console.log('obs')
+ if(typeof columnsWithObstacles[indexRowString] === 'object'){
+ columnsWithObstacles[indexRowString][indexColumnString] = obstacleObject
+ console.log('adding obstacle1',columnsWithObstacles)
+ return 
+ }
+   
+columnsWithObstacles[indexRowString] = {}
+columnsWithObstacles[indexRowString][indexColumnString] = obstacleObject
+    console.log('adding obstacle2',columnsWithObstacles)
+}
+
+
+// function addClickEventFunctionColumn(){
+//    if(wallsStatus.value) return wallsStatus
+// }
 
 onMounted(()=>{
  
@@ -54,7 +87,7 @@ return columnsWithObstacles[1][1].wall
         <table class="w-[97%]">
                 <tbody>
                 <tr :class="`row-${indexRow}`"  v-for="indexRow in rowsNumber">
-                  <td class="border  border-[#C572FF] p-[1%] " :class="[`column-${indexColumn}`,paintColumn(indexRow, indexColumn)]" v-for="indexColumn in columnsNumber">
+                  <td @click="()=> addObstacle(indexRow,indexColumn,{bomb:'',wall:'bg-black'})" class="border  border-[#C572FF] p-[1%] " :class="[`column-${indexColumn}`,paintColumn(indexRow, indexColumn)]" v-for="indexColumn in columnsNumber">
                    
                   </td>
                 </tr>
