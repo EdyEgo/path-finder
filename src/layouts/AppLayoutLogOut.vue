@@ -17,7 +17,7 @@ async function signUserOut() {
 // <template>
 //   <v-app>
 //     <v-app-bar color="grey-lighten-2">
-//       <span class="flex-1 logo ml-4 text-2xl">Sythwave Path Finder</span>
+//       <span class="flex-1 ml-4 text-2xl logo">Sythwave Path Finder</span>
 //       <v-btn color="" type="button" @click="Reset" class="mr-4">
 //         Reset
 //       </v-btn>
@@ -35,9 +35,9 @@ async function signUserOut() {
 <template>
   <v-app>
     <v-app-bar color="grey-lighten-2">
-      <span class="flex-1 logo ml-4 text-2xl">Sythwave Path Finder</span>
+      <span class="flex-1 ml-4 text-2xl logo">Sythwave Path Finder</span>
       <v-btn color="" type="button" @click="signUserOut" class="mr-4">
-       RESET BUTTONS
+       RESET 
       </v-btn>
     </v-app-bar>
     <v-navigation-drawer
