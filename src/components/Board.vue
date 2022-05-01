@@ -1,6 +1,7 @@
 
 <script setup lang="ts">
 import {ref,onMounted,reactive} from 'vue'
+import BoardColumn from '../components/BoardColumn.vue'
 import {useOptions} from '../stores/options'
  
 
@@ -87,9 +88,10 @@ return columnsWithObstacles[1][1].wall
         <table class="w-[97%]">
                 <tbody>
                 <tr :class="`row-${indexRow}`"  v-for="indexRow in rowsNumber">
-                  <td @click="()=> addObstacle(indexRow,indexColumn,{bomb:'',wall:'bg-black'})" class="border  border-[#C572FF] p-[1%] " :class="[`column-${indexColumn}`,paintColumn(indexRow, indexColumn)]" v-for="indexColumn in columnsNumber">
+                  <!-- <td @click="()=> addObstacle(indexRow,indexColumn,{bomb:'',wall:'bg-black'})" class="border  border-[#C572FF] p-[1%] " :class="[`column-${indexColumn}`,paintColumn(indexRow, indexColumn)]" v-for="indexColumn in columnsNumber">
                    
-                  </td>
+                  </td> -->
+                  <BoardColumn class="border  border-[#C572FF] p-[1%] "  v-for="indexColumn in columnsNumber"/>
                 </tr>
                 </tbody>
         </table>
