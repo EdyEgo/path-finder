@@ -53,7 +53,7 @@ export const useBoardData = defineStore({
     
     changeColumnStatus(rowIndex:string,columnIndex:string,newStatus:string){
       this.columnsInfo[rowIndex][columnIndex].status = newStatus
-      console.log('modified column', this.columnsInfo[rowIndex][columnIndex])
+     
     },
 
     incrementCreatedRowsByOne(){
