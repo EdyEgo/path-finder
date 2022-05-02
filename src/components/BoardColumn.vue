@@ -7,7 +7,8 @@ function changeColumnAspect(){
 </script>
 
 <template>
-  <td @click="changeColumnAspect" :class="columnAspect">
+<!-- @mouseenter="changeColumnAspect" -->
+  <td  @click="changeColumnAspect" :class="columnAspect">
                    
                   </td>
 </template>
