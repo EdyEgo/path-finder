@@ -1,19 +1,19 @@
 import { defineStore } from 'pinia'
 
 interface ColumnInfo{
-    status:string,className:string
+    status:string
 }
 
 export const useBoardData = defineStore({
   id: 'columnsData',
 
   state: () => {
-      // make your own algorithm
+  
     return <
       {
         rowsNumber : number
         columnsNumber : number
-        // columnsWithObstacles:{[key:string]:{[key:string]:{wall:string,bomb:string}}}
+       
         columnsInfo:{[key:string]:{[key:string]:ColumnInfo}} 
         createdRows:number
         createColumns:number
@@ -38,25 +38,24 @@ export const useBoardData = defineStore({
 
   actions: {
       
-  createInitRowObject(rowIndex:string){
-    this.columnsInfo[rowIndex] = {}
-   
-  },
-  createInitColumnObject(rowIndex:string,columnIndex:string){
-   
-    this.columnsInfo[rowIndex] = {[columnIndex]:{status:'clean',className:'bg-red-400'}}
-    console.log('after math',rowIndex,'gg',columnIndex,'and store',this.columnsInfo)
- 
-    // console.log('now my shit is', this.columnsInfo)
-  },
 
-    // createInitialRowWithColumnInfo(rowIndex:string,columnIndex:string){
-    //  if( typeof this.columnsInfo[rowIndex] !== 'object' ){
-    //   this.columnsInfo[rowIndex] = {}
-    //  }
-    //     this.columnsInfo[rowIndex] = {[columnIndex]:{status:'clean',className:'bg-red-400'}}
+
+    createInitialRowWithColumnInfo(rowIndex:string,columnIndex:string){
+     if( typeof this.columnsInfo[rowIndex] !== 'object' ){
+    
+      this.columnsInfo[rowIndex] = {[columnIndex]:{status:'clean'}}
+      return 
+     }
+        this.columnsInfo[rowIndex][columnIndex]= {status:'clean'}
+  
        
-    // },
+    },
+    
+    changeColumnStatus(rowIndex:string,columnIndex:string,newStatus:string){
+      this.columnsInfo[rowIndex][columnIndex].status = newStatus
+      console.log('modified column', this.columnsInfo[rowIndex][columnIndex])
+    },
+
     incrementCreatedRowsByOne(){
       this.createdRows += 1
      return this.createdRows

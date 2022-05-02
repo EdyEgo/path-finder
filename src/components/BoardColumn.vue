@@ -1,44 +1,54 @@
 <script lang="ts" setup>
 import {ref , defineProps,onMounted} from 'vue'
 import {useBoardData} from '../stores/boardData'
+import {useOptions} from '../stores/options'
 
 const boardStore = useBoardData()
-//saveColumnsInfo(rowIndex:,columnIndex,columnInfo:) 
+const optionsStore = useOptions()
+
 const props = defineProps<{
    indexColumn:number,
   indexRow:number
 }>()
 
+const clickModeStatus = ref(optionsStore.selectedMode)
+
 const stringedIndexColumn = props.indexColumn.toString()
 const stringedIndexRow = props.indexRow.toString()
+const columnIndex = ref('column-' + props.indexColumn.toString())
+const columnAspect = ref('')
 onMounted(() => {
-//  boardStore
-//  .saveColumnsInfo(props.indexRow.
-//  toString(),props.indexColumn.toString(),{className:'clean',status:'clean'})
-//  boardStore.createInitialRowWithColumnInfo(stringedIndexRow,stringedIndexColumn)
-boardStore.createInitColumnObject(stringedIndexRow,stringedIndexColumn)
+
+boardStore.createInitialRowWithColumnInfo(stringedIndexRow,stringedIndexColumn)
+columnAspect.value  = boardStore.$state.columnsInfo[stringedIndexRow][stringedIndexColumn].status
+
 })
 
-const columnIndex = ref('column-' + props.indexColumn.toString())
+function changeColumnStatus(){
+  // here we gonna look at the options too see what modude is selected(ex wall , blackHole/bomb)
+  // and on click or on hover or on click keept pressed change the column object and add that style to  
+  // the columnAspect 
+ boardStore.changeColumnStatus(stringedIndexRow,stringedIndexColumn,clickModeStatus.value)
 
-const columnAspect = ref('')//boardStore.$state.columnsInfo[stringedIndexRow][stringedIndexColumn].className)
-
-// function changeColumnAspect(){
-//      columnAspect.value  ='bg-black'
-// }
-
-
-function columnStatus(status:string,className:string){
- boardStore
- .saveColumnsInfo(props.indexRow.
- toString(),props.indexColumn.toString(),{className,status})
+columnAspect.value = clickModeStatus.value
 }
+
+
+
 
 </script>
 
 <template>
 <!-- @mouseenter="changeColumnAspect" -->
-  <td  :class="[columnAspect,columnIndex]" >
+  <td  :class="[columnAspect,columnIndex]" @click="changeColumnStatus">
                    
                   </td>
 </template>
+
+<style scoped>
+
+.wall{
+     background-color: black;
+}
+
+</style>

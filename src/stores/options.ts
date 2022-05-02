@@ -9,10 +9,10 @@ export const useOptions = defineStore({
       {
        wallStatus:boolean
        trapStatus:boolean
+       selectedMode:string
       }
     >{
-      wallStatus:true,
-      trapStatus:false
+      selectedMode:"wall"
     }
   },
 
@@ -22,12 +22,9 @@ export const useOptions = defineStore({
 
   actions: {
   
-    
-    commandStateWall(wallState:boolean){
-      this.wallStatus = wallState
-    },
-    commandTrapStatus(bombState:boolean){
-      this.trapStatus = bombState
+    changeSelectedMode(newMode:string){
+      this.selectedMode = newMode
     }
+    
   }
 })
