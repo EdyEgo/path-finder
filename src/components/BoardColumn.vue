@@ -1,26 +1,44 @@
 <script lang="ts" setup>
-import {ref , defineProps} from 'vue'
+import {ref , defineProps,onMounted} from 'vue'
 import {useBoardData} from '../stores/boardData'
 
 const boardStore = useBoardData()
-
+//saveColumnsInfo(rowIndex:,columnIndex,columnInfo:) 
 const props = defineProps<{
    indexColumn:number,
   indexRow:number
 }>()
 
-const columnIndex = ref('column-' + props.indexColumn.toString())
-console.log(columnIndex.value,'wtrh')
-const columnAspect = ref('')
+const stringedIndexColumn = props.indexColumn.toString()
+const stringedIndexRow = props.indexRow.toString()
+onMounted(() => {
+//  boardStore
+//  .saveColumnsInfo(props.indexRow.
+//  toString(),props.indexColumn.toString(),{className:'clean',status:'clean'})
+//  boardStore.createInitialRowWithColumnInfo(stringedIndexRow,stringedIndexColumn)
+boardStore.createInitColumnObject(stringedIndexRow,stringedIndexColumn)
+})
 
-function changeColumnAspect(){
-     columnAspect.value  ='bg-black'
+const columnIndex = ref('column-' + props.indexColumn.toString())
+
+const columnAspect = ref('')//boardStore.$state.columnsInfo[stringedIndexRow][stringedIndexColumn].className)
+
+// function changeColumnAspect(){
+//      columnAspect.value  ='bg-black'
+// }
+
+
+function columnStatus(status:string,className:string){
+ boardStore
+ .saveColumnsInfo(props.indexRow.
+ toString(),props.indexColumn.toString(),{className,status})
 }
+
 </script>
 
 <template>
 <!-- @mouseenter="changeColumnAspect" -->
-  <td  @click="changeColumnAspect" :class="[columnAspect,columnIndex]" >
+  <td  :class="[columnAspect,columnIndex]" >
                    
                   </td>
 </template>

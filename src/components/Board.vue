@@ -2,80 +2,82 @@
 <script setup lang="ts">
 import {ref,onMounted,reactive} from 'vue'
 import BoardColumn from '../components/BoardColumn.vue'
+import BoardRow from '../components/BoardRow.vue'
 import {useOptions} from '../stores/options'
- 
+import {useBoardData} from  '../stores/boardData'
 
 const optionsStore = useOptions()
+const boardDataStore = useBoardData()
 
 const wallsStatus = ref(optionsStore.$state.wallStatus)
 
 // const rowsNumber = ref(21)
 // const columnsNumber = ref(32)
-const rowsNumber = ref(2)
-const columnsNumber = ref(10)
+const rowsNumber = ref(boardDataStore.$state.rowsNumber)
+const columnsNumber = ref(boardDataStore.$state.columnsNumber)
 
 // {[key:number]:{[key:number]:{wall:string,bomb:string}}}
-const columnsWithObstacles = reactive
-<any>({
+// const columnsWithObstacles = reactive
+// <any>({
   
-  // ex rowNumber:columnNumber: 
-  //co1:{1:{wall:'if there is a wall then add here a style',bomb:false,}
-    "10":{"5":{wall:'bg-black',bomb:''}}
-})
+//   // ex rowNumber:columnNumber: 
+//   //co1:{1:{wall:'if there is a wall then add here a style',bomb:false,}
+//     "10":{"5":{wall:'bg-black',bomb:''}}
+// })
 
 
-function removeObstacle(indexRow:number,indexColumn:number){ 
+// function removeObstacle(indexRow:number,indexColumn:number){ 
 
-        const indexRowString = indexRow.toString()
-    const indexColumnString = indexColumn.toString()
+//         const indexRowString = indexRow.toString()
+//     const indexColumnString = indexColumn.toString()
 
    
-}
+// }
 
-function addObstacle(indexRow:number,indexColumn:number,obstacleObject:{wall:string,bomb:string}){
-    const indexRowString = indexRow.toString()
-    const indexColumnString = indexColumn.toString()
- console.log('obs')
- if(typeof columnsWithObstacles[indexRowString] === 'object'){
- columnsWithObstacles[indexRowString][indexColumnString] = obstacleObject
- console.log('adding obstacle1',columnsWithObstacles)
- return 
- }
+// function addObstacle(indexRow:number,indexColumn:number,obstacleObject:{wall:string,bomb:string}){
+//     const indexRowString = indexRow.toString()
+//     const indexColumnString = indexColumn.toString()
+//  console.log('obs')
+//  if(typeof columnsWithObstacles[indexRowString] === 'object'){
+//  columnsWithObstacles[indexRowString][indexColumnString] = obstacleObject
+//  console.log('adding obstacle1',columnsWithObstacles)
+//  return 
+//  }
    
-columnsWithObstacles[indexRowString] = {}
-columnsWithObstacles[indexRowString][indexColumnString] = obstacleObject
-    console.log('adding obstacle2',columnsWithObstacles)
-}
+// columnsWithObstacles[indexRowString] = {}
+// columnsWithObstacles[indexRowString][indexColumnString] = obstacleObject
+//     console.log('adding obstacle2',columnsWithObstacles)
+// }
 
 
 // function addClickEventFunctionColumn(){
 //    if(wallsStatus.value) return wallsStatus
 // }
 
-onMounted(()=>{
+// onMounted(()=>{
  
    
- if(screen.width > 790){
-      rowsNumber.value = 28
-      columnsNumber.value = 75
- }
-})
+//  if(screen.width > 790){
+//       rowsNumber.value = 28
+//       columnsNumber.value = 75
+//  }
+// })
 
 
-function paintColumn(indexRow:number,indexColumn:number){
+// function paintColumn(indexRow:number,indexColumn:number){
   
-    const indexRowString = indexRow.toString()
-    const indexColumnString = indexColumn.toString()
+//     const indexRowString = indexRow.toString()
+//     const indexColumnString = indexColumn.toString()
 
-      console.log('ce plm','type',columnsWithObstacles[indexRowString],'aa',)
-  if(columnsWithObstacles[indexRowString] !== undefined && columnsWithObstacles[indexRowString][indexColumnString] !== undefined){
-      return columnsWithObstacles[indexRowString][indexColumnString].wall
-  }
-  return ''
+//       console.log('ce plm','type',columnsWithObstacles[indexRowString],'aa',)
+//   if(columnsWithObstacles[indexRowString] !== undefined && columnsWithObstacles[indexRowString][indexColumnString] !== undefined){
+//       return columnsWithObstacles[indexRowString][indexColumnString].wall
+//   }
+//   return ''
 
-// return columnsWithObstacles[1][1].wall
+// // return columnsWithObstacles[1][1].wall
 
-}
+// }
 
 //columnsWithObstacles[indexRow][indexColumn] || ''
 
@@ -84,12 +86,14 @@ function paintColumn(indexRow:number,indexColumn:number){
 <template>
         <table class="w-[97%]">
                 <tbody>
-                <tr :class="`row-${indexRow}`"  v-for="indexRow in rowsNumber">
+                <!-- <tr :class="`row-${indexRow}`"  v-for="indexRow in rowsNumber"> -->
                   <!-- <td @click="()=> addObstacle(indexRow,indexColumn,{bomb:'',wall:'bg-black'})" class="border  border-[#C572FF] p-[1%] " :class="[`column-${indexColumn}`,paintColumn(indexRow, indexColumn)]" v-for="indexColumn in columnsNumber">
                    
                   </td> -->
-                  <BoardColumn class="border  border-[#C572FF] p-[1%] "  v-for="indexColumn in columnsNumber" :key="indexColumn" :indexColumn="indexColumn" :indexRow="indexRow"/>
-                </tr>
+                  <!-- <BoardColumn class="border  border-[#C572FF] p-[1%] "  v-for="indexColumn in columnsNumber" :key="indexColumn" :indexColumn="indexColumn" :indexRow="indexRow"/> -->
+                <!-- </tr> -->
+
+                <BoardRow  :class="`row-${indexRow}`"  v-for="indexRow in rowsNumber" :key="indexRow" :indexRow="indexRow"/>
                 </tbody>
         </table>
 </template>
