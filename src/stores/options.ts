@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 
 
 export const useOptions = defineStore({
-  id: 'blackLists',
+  id: 'options',
 
   state: () => {
     return <
@@ -16,7 +16,7 @@ export const useOptions = defineStore({
     }
   },
 
-  persist: true,
+  // persist: true,
 
   getters: {},
 

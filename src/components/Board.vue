@@ -9,9 +9,10 @@ const optionsStore = useOptions()
 
 const wallsStatus = ref(optionsStore.$state.wallStatus)
 
-const rowsNumber = ref(21)
-const columnsNumber = ref(32)
-
+// const rowsNumber = ref(21)
+// const columnsNumber = ref(32)
+const rowsNumber = ref(2)
+const columnsNumber = ref(10)
 
 // {[key:number]:{[key:number]:{wall:string,bomb:string}}}
 const columnsWithObstacles = reactive
@@ -28,11 +29,7 @@ function removeObstacle(indexRow:number,indexColumn:number){
         const indexRowString = indexRow.toString()
     const indexColumnString = indexColumn.toString()
 
-    //  if(columnsWithObstacles[indexRowString] !== undefined && columnsWithObstacles[indexRowString][indexColumnString] !== undefined){
-    //     // remove obstacle
-      
-    //     return 
-    // }
+   
 }
 
 function addObstacle(indexRow:number,indexColumn:number,obstacleObject:{wall:string,bomb:string}){
@@ -76,7 +73,7 @@ function paintColumn(indexRow:number,indexColumn:number){
   }
   return ''
 
-return columnsWithObstacles[1][1].wall
+// return columnsWithObstacles[1][1].wall
 
 }
 
@@ -91,7 +88,7 @@ return columnsWithObstacles[1][1].wall
                   <!-- <td @click="()=> addObstacle(indexRow,indexColumn,{bomb:'',wall:'bg-black'})" class="border  border-[#C572FF] p-[1%] " :class="[`column-${indexColumn}`,paintColumn(indexRow, indexColumn)]" v-for="indexColumn in columnsNumber">
                    
                   </td> -->
-                  <BoardColumn class="border  border-[#C572FF] p-[1%] "  v-for="indexColumn in columnsNumber"/>
+                  <BoardColumn class="border  border-[#C572FF] p-[1%] "  v-for="indexColumn in columnsNumber" :key="indexColumn" :indexColumn="indexColumn" :indexRow="indexRow"/>
                 </tr>
                 </tbody>
         </table>
