@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import {dijkstra,getNodesInShortestPathOrder} from '@/algorithms/dijkstra' 
 
 interface ColumnInfo{
     status:string
@@ -41,7 +42,39 @@ export const useBoardData = defineStore({
   getters: {},
 
   actions: {
-      
+       
+
+     testVisualizeDjkstra(){
+// this.columnsInfo[rowIndex][columnIndex]
+
+//// original
+
+// const startNode = grid[START_NODE_ROW][START_NODE_COL];
+// const finishNode = grid[FINISH_NODE_ROW][FINISH_NODE_COL];
+// const visitedNodesInOrder = dijkstra(grid, startNode, finishNode);
+// const nodesInShortestPathOrder = getNodesInShortestPathOrder(finishNode);
+
+////
+
+
+      const grid = this.columnsInfo;
+      if(!this.startPoint[0] || !this.startPoint[1] || !this.targetPoint[0] || !this.targetPoint[1])  return null
+      const startNodeRow = this.startPoint[0]
+      const startNodeCol = this.startPoint[1]
+      const finishNodeRow = this.targetPoint[0] // target/finish same thing
+      const finishNodeCol =  this.targetPoint[1]
+
+     const startNode = this.columnsInfo[startNodeRow][startNodeCol] //grid[START_NODE_ROW][START_NODE_COL];
+const finishNode = this.columnsInfo[finishNodeRow][finishNodeCol] ///grid[FINISH_NODE_ROW][FINISH_NODE_COL];
+
+
+      const visitedNodesInOrder = dijkstra(grid, startNode, finishNode);
+      console.log('O_o it works ???',visitedNodesInOrder)
+  //     this.animateDijkstra(visitedNodesInOrder, nodesInShortestPathOrder);
+    
+  
+  
+  },
 
 
     createInitialRowWithColumnInfo(rowIndex:string,columnIndex:string){
@@ -58,7 +91,7 @@ export const useBoardData = defineStore({
     changeColumnStatus(rowIndex:string,columnIndex:string,newStatus:string){
       // if status is start or target or bomb , remove the old point with that status and make it clean/unvisited
 
-    if(newStatus === 'start' || newStatus === 'target' || newStatus === 'bomb' || newStatus === 'weight'){
+    if(newStatus === 'start' || newStatus === 'target' || newStatus === 'bomb' ){
      
        // change to unvisited the old interest point 
         // this.columnsInfo[]
