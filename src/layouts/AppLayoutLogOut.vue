@@ -2,10 +2,12 @@
 import { ref,reactive,watchEffect } from 'vue'
 import router from '@/router'
 import { useAuth } from '@/stores/auth'
+import {useOptions} from '../stores/options'
 
 const drawer = ref(true)
 const rail = ref(true)
 const authStore = useAuth()
+const optionsStore = useOptions()
 const playerName = ref('UserUnkown')// make this be styled like lost signal writing
 // replace picture with a AI robot
 async function signUserOut() {
@@ -14,25 +16,29 @@ async function signUserOut() {
 
 const selectAlgorithm = reactive({
   label:'Select Algorithm',
-  items:['Breadth-first Search','Depth-first Search'],
-  value:'No algorithm selected' 
+  items:optionsStore.$state.algorithms,
+  value:optionsStore.$state.selectedAlgorithm
 })
 const mazesAndPatterns = reactive({
   label:'Select Maze/Pattern',
-  items:['Recursive Division','Recursive Division(vertical skew)'],
-  value:'No pattern selected' 
+  items:optionsStore.$state.patterns,
+  value:optionsStore.$state.selectedPattern 
 })
 
 const viewSpeed =  reactive({
   label:'Select speed',
-  items:['fast','medium','slow'],
-  value:'fast' 
+  items:optionsStore.$state.speeds,
+  value:optionsStore.$state.selectedSpeed
 })
 
 watchEffect(()=>{
   // write to option store
-  
+  selectAlgorithm.value
+  mazesAndPatterns.value
+  viewSpeed.value
 
+  optionsStore
+  .changeSelectables( selectAlgorithm.value,mazesAndPatterns.value, viewSpeed.value)
 })
 
 // <template>

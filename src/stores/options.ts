@@ -7,11 +7,21 @@ export const useOptions = defineStore({
   state: () => {
     return <
       {
-       wallStatus:boolean
-       trapStatus:boolean
+       selectedAlgorithm:string
+       algorithms:string[]
+       selectedPattern:string
+       patterns:string[]
+       selectedSpeed:string
+       speeds:string[]
        selectedMode:string
       }
     >{
+      selectedAlgorithm:'No algorithm selected',
+      algorithms:['Breadth-first Search','Depth-first Search'],
+       selectedPattern:'No pattern selected',
+       patterns:['Recursive Division','Recursive Division(vertical skew)'],
+       selectedSpeed:'fast',
+       speeds:['fast','medium','slow'],
       selectedMode:"wall"
     }
   },
@@ -24,6 +34,13 @@ export const useOptions = defineStore({
   
     changeSelectedMode(newMode:string){
       this.selectedMode = newMode
+    },
+
+    changeSelectables(selectedAlgorithm:string,selectedPattern:string,selectedSpeed:string){
+     this.selectedAlgorithm = selectedAlgorithm
+     this.selectedPattern = selectedPattern
+     this.selectedSpeed = selectedSpeed
+    
     }
     
   }
