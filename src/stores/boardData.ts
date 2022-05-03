@@ -18,8 +18,9 @@ export const useBoardData = defineStore({
         createdRows:number
         createColumns:number
         // status can be : wall , pathSearched , pathTraveled , bomb/blackHole
-        startPoint:{[key:string]:string}  // rowstring:columnstring 
-        finishPoint:{[key:string]:string} 
+        startPoint:[string,string] | []//['1','7']  row number , column number          {[key:string]:string}  // rowstring:columnstring 
+        targetPoint:[string,string] | []
+        bombPoint:[string,string] | []
       }
     >{
         rowsNumber : screen.width > 990 ? screen.width > 1280 ? 29 : 29 : 27,//screen.width > 790 ? 28 :21,
@@ -27,8 +28,9 @@ export const useBoardData = defineStore({
         createdRows:0,
         createColumns: 0,
         columnsInfo:{},
-        startPoint:{},
-        finishPoint:{}
+        startPoint:[],
+        targetPoint:[],
+        bombPoint:[]
     }
   },
 
@@ -52,6 +54,26 @@ export const useBoardData = defineStore({
     },
     
     changeColumnStatus(rowIndex:string,columnIndex:string,newStatus:string){
+      // if status is start or target or bomb , remove the old point with that status and make it clean/unvisited
+
+    if(newStatus === 'start' || newStatus === 'target' || newStatus === 'bomb'){
+     
+       // change to unvisited the old interest point 
+        // this.columnsInfo[]
+
+        const uniqueOldStatusRowIndex = this[`${newStatus}Point`][0];
+        const uniqueOldStatusColumnIndex = this[`${newStatus}Point`][1];
+
+       if(uniqueOldStatusRowIndex && uniqueOldStatusColumnIndex){
+        // delete old unique node point
+        this.columnsInfo[uniqueOldStatusRowIndex][uniqueOldStatusColumnIndex].status = 'unvisited'
+       }
+  // add the new indexes to the unique node point
+       this[`${newStatus}Point`] = [`${rowIndex}`,`${columnIndex}`]
+
+      // this[`${newStatus}Point`]  = new target or start or bomb point
+    }
+
       this.columnsInfo[rowIndex][columnIndex].status = newStatus
     
     },
