@@ -6,7 +6,7 @@ import Board from '../components/Board.vue'
 
 <template class="bg-black">
 <LogOutLayout>
-Home page
+
 <div class="board-container">
 
 <Board/>

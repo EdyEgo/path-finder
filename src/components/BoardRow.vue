@@ -17,6 +17,7 @@ const columnsNumber = ref(boardDataStore.$state.columnsNumber)
 
 
 <template>
+
                <tr >
                  
                   <BoardColumn class="border  border-[#C572FF] p-[1%] "  v-for="indexColumn in columnsNumber" :key="indexColumn" :indexColumn="indexColumn" :indexRow="props.indexRow"/>

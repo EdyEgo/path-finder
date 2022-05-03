@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import {ref , defineProps,onMounted} from 'vue'
+import {ref , defineProps,onMounted,watchEffect} from 'vue'
 import {useBoardData} from '../stores/boardData'
 import {useOptions} from '../stores/options'
 
@@ -16,13 +16,22 @@ const clickModeStatus = ref(optionsStore.selectedMode)
 const stringedIndexColumn = props.indexColumn.toString()
 const stringedIndexRow = props.indexRow.toString()
 const columnIndex = ref('column-' + props.indexColumn.toString())
-const columnAspect = ref('')
+const columnAspect = ref<string>('')
+
 onMounted(() => {
 
 boardStore.createInitialRowWithColumnInfo(stringedIndexRow,stringedIndexColumn)
-columnAspect.value  = boardStore.$state.columnsInfo[stringedIndexRow][stringedIndexColumn].status
+
+  watchEffect(() => {
+ 
+   boardStore.$state.columnsInfo[stringedIndexRow][stringedIndexColumn].status// watch the status
+    columnAspect.value  = boardStore.$state.columnsInfo[stringedIndexRow][stringedIndexColumn].status
+ })
 
 })
+
+
+
 
 function changeColumnStatus(){
   // here we gonna look at the options too see what modude is selected(ex wall , blackHole/bomb)
@@ -49,6 +58,10 @@ columnAspect.value = clickModeStatus.value
 
 .wall{
      background-color: black;
+}
+
+.void{
+  background-color: blue;
 }
 
 </style>

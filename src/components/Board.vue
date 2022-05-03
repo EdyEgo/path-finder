@@ -80,10 +80,16 @@ const columnsNumber = ref(boardDataStore.$state.columnsNumber)
 // }
 
 //columnsWithObstacles[indexRow][indexColumn] || ''
-
+function changeTest(){
+        boardDataStore.changeColumnStatus( "12",  "55",  "void")
+}
 </script>
 
 <template>
+<div class="legend flex">
+Node types: <div class="flex mx-1">Wall Node <div class="p-2 mx-2 my-1 bg-black border border-[#C572FF]"></div></div>
+</div>
+<button @click="changeTest" class="border-dark-800 border cursor-pointer hover:bg-black hover:text-white">12-55</button>
         <table class="w-[97%]">
                 <tbody>
                 <!-- <tr :class="`row-${indexRow}`"  v-for="indexRow in rowsNumber"> -->
