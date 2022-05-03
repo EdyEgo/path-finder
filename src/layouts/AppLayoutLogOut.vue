@@ -95,13 +95,33 @@ watchEffect(()=>{
 
       <v-list density="compact" nav>
       <!--  prepend-icon="mdi-home-city" -->
-        <v-list-item
+      
+         <v-list-item v-show="!rail"
          
           title="Select menu"
-          value="dashboard"
+       
+        ></v-list-item>
+        <!-- rail --> 
+
+          <v-list-item v-show="rail"
+         
+          title="Algorithm"
+       
+        ></v-list-item>
+
+         <v-list-item v-show="rail"
+         
+          title="Pattern"
+       
+        ></v-list-item>
+         <v-list-item v-show="rail"
+         
+          title="Speed"
+       
         ></v-list-item>
          <!-- Algorithms -->
-        <v-select class="overflow-hidden"
+         
+        <v-select class="overflow-hidden"  v-show="!rail"
        
           :items="selectAlgorithm.items"
           filled
@@ -112,7 +132,7 @@ watchEffect(()=>{
         </v-select>
 
  <!-- Mazes & Patterns -->
-         <v-select class="overflow-hidden"
+         <v-select class="overflow-hidden" v-show="!rail"
        
           :items="mazesAndPatterns.items"
           filled
@@ -124,7 +144,7 @@ watchEffect(()=>{
       
     
          <!-- viewSpeed -->
-           <v-select class="overflow-hidden"
+           <v-select class="overflow-hidden" v-show="!rail"
        
           :items="viewSpeed.items"
           filled

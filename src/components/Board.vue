@@ -144,7 +144,7 @@ Clear Path
   Add Trap <div class="icon-container">&#9762;</div>
 </div> -->
 
-<button @click="changeTest" class="border-dark-800 border cursor-pointer hover:bg-black hover:text-white">Test create one line</button>
+<button @click="changeTest" class="border-dark-800 border cursor-pointer hover:bg-black hover:text-white">Test create one wall line</button>
         <table class="w-[97%]">
                 <tbody>
              
