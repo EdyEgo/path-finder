@@ -50,8 +50,15 @@ function visualizeAlgorithm(){
 }
 
 
-function changeTest(){
-        boardDataStore.changeColumnStatus( "12",  "55",  "void")
+function changeTest(){ 
+
+        for(let i = 1;i< 10;i++){
+                setTimeout(()=>{
+  boardDataStore.changeColumnStatus( "1",  `${i}`,  "wall")   
+                },500)
+             
+        }
+
 }
 
 
@@ -136,12 +143,7 @@ Clear Path
 <button @click="changeTest" class="border-dark-800 border cursor-pointer hover:bg-black hover:text-white">12-55</button>
         <table class="w-[97%]">
                 <tbody>
-                <!-- <tr :class="`row-${indexRow}`"  v-for="indexRow in rowsNumber"> -->
-                  <!-- <td @click="()=> addObstacle(indexRow,indexColumn,{bomb:'',wall:'bg-black'})" class="border  border-[#C572FF] p-[1%] " :class="[`column-${indexColumn}`,paintColumn(indexRow, indexColumn)]" v-for="indexColumn in columnsNumber">
-                   
-                  </td> -->
-                  <!-- <BoardColumn class="border  border-[#C572FF] p-[1%] "  v-for="indexColumn in columnsNumber" :key="indexColumn" :indexColumn="indexColumn" :indexRow="indexRow"/> -->
-                <!-- </tr> -->
+             
 
                 <BoardRow  :class="`row-${indexRow}`"  v-for="indexRow in rowsNumber" :key="indexRow" :indexRow="indexRow"/>
                 </tbody>

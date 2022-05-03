@@ -20,7 +20,7 @@ const columnsNumber = ref(boardDataStore.$state.columnsNumber)
 
                <tr >
                  
-                  <BoardColumn class="border  border-[#C572FF] p-[1%] "  v-for="indexColumn in columnsNumber" :key="indexColumn" :indexColumn="indexColumn" :indexRow="props.indexRow"/>
+                  <BoardColumn class="border  border-[#C572FF] column-element"  v-for="indexColumn in columnsNumber" :key="indexColumn" :indexColumn="indexColumn" :indexRow="props.indexRow"/>
                 </tr>
 
 </template>
