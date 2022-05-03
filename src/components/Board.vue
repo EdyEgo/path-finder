@@ -76,13 +76,13 @@ function changeClickBoardMode(newMode:string){
 <template>
 <div class="legend flex border-b pb-2">
 Node types:
-<div :class="typeNodesSelectedClass.start" class="flex mx-1 items-center cursor-pointer  pb-2 border-b  hover:border-black" @click="changeClickBoardMode('start')">Start Node <div class="p-2 mx-2 my-1  border 
+<div :class="typeNodesSelectedClass.start" class="flex mx-1 items-center cursor-pointer  pb-2 border-b  hover:border-black" @click="changeClickBoardMode('start')">Start Node <div class=" mx-2 my-1  border 
  border-[#C572FF]">&#128640</div></div>
 
-<div :class="typeNodesSelectedClass.target" class="flex mx-1 items-center cursor-pointer pb-2 border-b  hover:border-black" @click="changeClickBoardMode('target')">Target Node <div class="p-2 mx-2 my-1  border border-[#C572FF]">&#127919</div></div>
-<div :class="typeNodesSelectedClass.trap" class="flex mx-1 items-center cursor-pointer pb-2 border-b  hover:border-black" @click="changeClickBoardMode('trap')">Trap Node <div class="p-2 mx-2 my-1  border border-[#C572FF]">&#9762;</div></div>
+<div :class="typeNodesSelectedClass.target" class="flex mx-1 items-center cursor-pointer pb-2 border-b  hover:border-black" @click="changeClickBoardMode('target')">Target Node <div class=" mx-2 my-1  border border-[#C572FF]">&#127919</div></div>
+<div :class="typeNodesSelectedClass.trap" class="flex mx-1 items-center cursor-pointer pb-2 border-b  hover:border-black" @click="changeClickBoardMode('trap')">Trap Node <div class="px-1 mx-2 my-1  border border-[#C572FF]">&#9762;</div></div>
 <!-- &#9875; -->
-<div :class="typeNodesSelectedClass.weight" class="flex mx-1 items-center cursor-pointer pb-2 border-b hover:border-black" @click="changeClickBoardMode('weight')">Weighted Node <div class="p-2 mx-2 my-1  border border-[#C572FF]">&#9875;</div></div>
+<div :class="typeNodesSelectedClass.weight" class="flex mx-1 items-center cursor-pointer pb-2 border-b hover:border-black" @click="changeClickBoardMode('weight')">Weighted Node <div class=" mx-2 my-1  border border-[#C572FF]">&#9875;</div></div>
 <div :class="typeNodesSelectedClass.wall" class="flex mx-1 items-center cursor-pointer pb-2 border-b hover:border-black" @click="changeClickBoardMode('wall')">Wall Node <div class="p-2 mx-2 my-1 bg-black border border-[#C572FF]"></div></div>
 
 <div class="flex mx-1 items-center">Unvisited Node <div class="p-2 mx-2 my-1  border border-[#C572FF]"></div></div>
