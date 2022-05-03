@@ -1,6 +1,6 @@
 
 <script setup lang="ts">
-import {ref,onMounted,reactive} from 'vue'
+import {ref,onMounted,reactive , watchEffect} from 'vue'
 import BoardColumn from '../components/BoardColumn.vue'
 import BoardRow from '../components/BoardRow.vue'
 import {useOptions} from '../stores/options'
@@ -9,86 +9,88 @@ import {useBoardData} from  '../stores/boardData'
 const optionsStore = useOptions()
 const boardDataStore = useBoardData()
 
-const wallsStatus = ref(optionsStore.$state.wallStatus)
 
-// const rowsNumber = ref(21)
-// const columnsNumber = ref(32)
+
+const algorithmSelected =reactive({
+        disabled:true,
+        buttonText:optionsStore.$state.selectedAlgorithm
+})
+
+watchEffect(()=>{
+        optionsStore.$state.selectedAlgorithm
+        if(optionsStore.$state.selectedAlgorithm === 'No algorithm selected'){
+                algorithmSelected.buttonText = 'Select Algorithm to Visualize'
+                algorithmSelected.disabled = true
+                return
+        }
+        algorithmSelected.buttonText = 'Visualize ' + optionsStore.$state.selectedAlgorithm
+        algorithmSelected.disabled = false
+
+        // algorithmSelected.buttonText = optionsStore.$state.selectedAlgorithm === 'No algorithm selected' ? 'Select Algorithm to Visualize' :'Visualize ' + optionsStore.$state.selectedAlgorithm
+})
+
+
 const rowsNumber = ref(boardDataStore.$state.rowsNumber)
 const columnsNumber = ref(boardDataStore.$state.columnsNumber)
 
-// {[key:number]:{[key:number]:{wall:string,bomb:string}}}
-// const columnsWithObstacles = reactive
-// <any>({
-  
-//   // ex rowNumber:columnNumber: 
-//   //co1:{1:{wall:'if there is a wall then add here a style',bomb:false,}
-//     "10":{"5":{wall:'bg-black',bomb:''}}
-// })
+function visualizeAlgorithm(){
+        if( algorithmSelected.disabled){
+        algorithmSelected.buttonText = 'Pick an algorithm '
+                return 
+        }
+}
 
 
-// function removeObstacle(indexRow:number,indexColumn:number){ 
-
-//         const indexRowString = indexRow.toString()
-//     const indexColumnString = indexColumn.toString()
-
-   
-// }
-
-// function addObstacle(indexRow:number,indexColumn:number,obstacleObject:{wall:string,bomb:string}){
-//     const indexRowString = indexRow.toString()
-//     const indexColumnString = indexColumn.toString()
-//  console.log('obs')
-//  if(typeof columnsWithObstacles[indexRowString] === 'object'){
-//  columnsWithObstacles[indexRowString][indexColumnString] = obstacleObject
-//  console.log('adding obstacle1',columnsWithObstacles)
-//  return 
-//  }
-   
-// columnsWithObstacles[indexRowString] = {}
-// columnsWithObstacles[indexRowString][indexColumnString] = obstacleObject
-//     console.log('adding obstacle2',columnsWithObstacles)
-// }
-
-
-// function addClickEventFunctionColumn(){
-//    if(wallsStatus.value) return wallsStatus
-// }
-
-// onMounted(()=>{
- 
-   
-//  if(screen.width > 790){
-//       rowsNumber.value = 28
-//       columnsNumber.value = 75
-//  }
-// })
-
-
-// function paintColumn(indexRow:number,indexColumn:number){
-  
-//     const indexRowString = indexRow.toString()
-//     const indexColumnString = indexColumn.toString()
-
-//       console.log('ce plm','type',columnsWithObstacles[indexRowString],'aa',)
-//   if(columnsWithObstacles[indexRowString] !== undefined && columnsWithObstacles[indexRowString][indexColumnString] !== undefined){
-//       return columnsWithObstacles[indexRowString][indexColumnString].wall
-//   }
-//   return ''
-
-// // return columnsWithObstacles[1][1].wall
-
-// }
-
-//columnsWithObstacles[indexRow][indexColumn] || ''
 function changeTest(){
         boardDataStore.changeColumnStatus( "12",  "55",  "void")
 }
 </script>
 
 <template>
-<div class="legend flex">
-Node types: <div class="flex mx-1">Wall Node <div class="p-2 mx-2 my-1 bg-black border border-[#C572FF]"></div></div>
+<div class="legend flex border-b pb-2">
+Node types:
+<div class="flex mx-1 items-center">Start Node <div class="p-2 mx-2 my-1  border 
+ border-[#C572FF]">&#128640</div></div>
+
+<div class="flex mx-1 items-center">Target Node <div class="p-2 mx-2 my-1  border border-[#C572FF]">&#127919</div></div>
+<div class="flex mx-1 items-center">Trap Node <div class="p-2 mx-2 my-1  border border-[#C572FF]">&#9762;</div></div>
+<!-- &#9875; -->
+<div class="flex mx-1 items-center">Weighted Node <div class="p-2 mx-2 my-1  border border-[#C572FF]">&#9875;</div></div>
+
+
+<div class="flex mx-1 items-center">Unvisited Node <div class="p-2 mx-2 my-1  border border-[#C572FF]"></div></div>
+<div class="flex mx-1 items-center">Visited Nodes 
+<div class="p-2 mx-2 my-1 bg-[#C572FF] border border-[#C572FF]"></div>
+<div class="p-2 mx-2 my-1 bg-red-400 border border-[#C572FF]"></div>
 </div>
+<div class="flex mx-1 items-center">Shortest-path Node <div class="p-2 mx-2 my-1 bg-blue-400 border border-[#C572FF]"></div></div>
+<div class="flex mx-1 items-center">Wall Node <div class="p-2 mx-2 my-1 bg-black border border-[#C572FF]"></div></div>
+</div>
+<div class="board-commands pt-2">
+<div class="title-container text-center p-2">General Commands</div>
+<div class="general-commands-container flex gap-2 justify-center text-md">
+
+<div class="p-2 border rounded-sm cursor-pointer hover:bg-gray-200 ease transition-all">
+ Clear Board
+</div>
+<div class="p-2 border rounded-sm 0 cursor-pointer hover:bg-gray-200 ease transition-all">
+ Clear Walls & Weights
+</div>
+<div class="p-2 border rounded-sm  cursor-pointer hover:bg-gray-200 ease transition-all">
+Clear Path
+</div>
+<div @click="visualizeAlgorithm" :class="algorithmSelected.disabled ? 'hover:bg-red-700': 'hover:bg-blue-700'" class="p-2 border rounded-sm bg-blue-600 text-white  cursor-pointer  ease transition-all">
+{{algorithmSelected.buttonText}}
+</div>
+</div>
+
+
+</div>
+
+<!-- <div class="flex">
+  Add Trap <div class="icon-container">&#9762;</div>
+</div> -->
+
 <button @click="changeTest" class="border-dark-800 border cursor-pointer hover:bg-black hover:text-white">12-55</button>
         <table class="w-[97%]">
                 <tbody>

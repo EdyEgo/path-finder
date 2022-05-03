@@ -97,7 +97,7 @@ watchEffect(()=>{
       <!--  prepend-icon="mdi-home-city" -->
         <v-list-item
          
-          title="Dashboard"
+          title="Select menu"
           value="dashboard"
         ></v-list-item>
          <!-- Algorithms -->
