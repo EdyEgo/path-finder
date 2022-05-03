@@ -11,7 +11,12 @@ const props = defineProps<{
   indexRow:number
 }>()
 
-const clickModeStatus = ref(optionsStore.selectedMode)
+const clickModeStatus = ref()
+
+ watchEffect(() => {
+   optionsStore.selectedMode
+   clickModeStatus.value = optionsStore.selectedMode
+ })
 
 const stringedIndexColumn = props.indexColumn.toString()
 const stringedIndexRow = props.indexRow.toString()

@@ -29,6 +29,15 @@ watchEffect(()=>{
         // algorithmSelected.buttonText = optionsStore.$state.selectedAlgorithm === 'No algorithm selected' ? 'Select Algorithm to Visualize' :'Visualize ' + optionsStore.$state.selectedAlgorithm
 })
 
+const typeNodesSelectedClass = reactive<{[key:string]:string}>({
+        start:'border-transparent',
+        target:'border-transparent',
+        trap:'border-transparent',
+        weight:'border-transparent',
+        wall:'border-transparent'
+
+})
+
 
 const rowsNumber = ref(boardDataStore.$state.rowsNumber)
 const columnsNumber = ref(boardDataStore.$state.columnsNumber)
@@ -44,19 +53,37 @@ function visualizeAlgorithm(){
 function changeTest(){
         boardDataStore.changeColumnStatus( "12",  "55",  "void")
 }
+
+
+function changeClickBoardMode(newMode:string){
+   // ex: click on the type of node you wanna add on the board(ex:start node) , now when you click on the 
+   // board a rocket will be added on that node 
+
+   // changeSelectedMode
+   typeNodesSelectedClass.start = ''
+   typeNodesSelectedClass.target = ''
+   typeNodesSelectedClass.trap= ''
+   typeNodesSelectedClass.wall = ''
+   typeNodesSelectedClass.weight = ''
+
+   typeNodesSelectedClass[newMode] = 'border-black'
+
+   optionsStore.changeSelectedMode(newMode)
+
+}
 </script>
 
 <template>
 <div class="legend flex border-b pb-2">
 Node types:
-<div class="flex mx-1 items-center">Start Node <div class="p-2 mx-2 my-1  border 
+<div :class="typeNodesSelectedClass.start" class="flex mx-1 items-center cursor-pointer  pb-2 border-b  hover:border-black" @click="changeClickBoardMode('start')">Start Node <div class="p-2 mx-2 my-1  border 
  border-[#C572FF]">&#128640</div></div>
 
-<div class="flex mx-1 items-center">Target Node <div class="p-2 mx-2 my-1  border border-[#C572FF]">&#127919</div></div>
-<div class="flex mx-1 items-center">Trap Node <div class="p-2 mx-2 my-1  border border-[#C572FF]">&#9762;</div></div>
+<div :class="typeNodesSelectedClass.target" class="flex mx-1 items-center cursor-pointer pb-2 border-b  hover:border-black" @click="changeClickBoardMode('target')">Target Node <div class="p-2 mx-2 my-1  border border-[#C572FF]">&#127919</div></div>
+<div :class="typeNodesSelectedClass.trap" class="flex mx-1 items-center cursor-pointer pb-2 border-b  hover:border-black" @click="changeClickBoardMode('trap')">Trap Node <div class="p-2 mx-2 my-1  border border-[#C572FF]">&#9762;</div></div>
 <!-- &#9875; -->
-<div class="flex mx-1 items-center">Weighted Node <div class="p-2 mx-2 my-1  border border-[#C572FF]">&#9875;</div></div>
-
+<div :class="typeNodesSelectedClass.weight" class="flex mx-1 items-center cursor-pointer pb-2 border-b hover:border-black" @click="changeClickBoardMode('weight')">Weighted Node <div class="p-2 mx-2 my-1  border border-[#C572FF]">&#9875;</div></div>
+<div :class="typeNodesSelectedClass.wall" class="flex mx-1 items-center cursor-pointer pb-2 border-b hover:border-black" @click="changeClickBoardMode('wall')">Wall Node <div class="p-2 mx-2 my-1 bg-black border border-[#C572FF]"></div></div>
 
 <div class="flex mx-1 items-center">Unvisited Node <div class="p-2 mx-2 my-1  border border-[#C572FF]"></div></div>
 <div class="flex mx-1 items-center">Visited Nodes 
@@ -64,7 +91,7 @@ Node types:
 <div class="p-2 mx-2 my-1 bg-red-400 border border-[#C572FF]"></div>
 </div>
 <div class="flex mx-1 items-center">Shortest-path Node <div class="p-2 mx-2 my-1 bg-blue-400 border border-[#C572FF]"></div></div>
-<div class="flex mx-1 items-center">Wall Node <div class="p-2 mx-2 my-1 bg-black border border-[#C572FF]"></div></div>
+
 </div>
 <div class="board-commands pt-2">
 <div class="title-container text-center p-2">General Commands</div>
