@@ -20,6 +20,7 @@ export const useBoardData = defineStore({
         // status can be : wall , pathSearched , pathTraveled , bomb/blackHole
         startPoint:[string,string] | []//['1','7']  row number , column number          {[key:string]:string}  // rowstring:columnstring 
         targetPoint:[string,string] | []
+        weightPoint:[string,string] | []
         bombPoint:[string,string] | []
       }
     >{
@@ -30,6 +31,7 @@ export const useBoardData = defineStore({
         columnsInfo:{},
         startPoint:[],
         targetPoint:[],
+        weightPoint:[],
         bombPoint:[]
     }
   },
@@ -45,10 +47,10 @@ export const useBoardData = defineStore({
     createInitialRowWithColumnInfo(rowIndex:string,columnIndex:string){
      if( typeof this.columnsInfo[rowIndex] !== 'object' ){
     
-      this.columnsInfo[rowIndex] = {[columnIndex]:{status:'clean'}}
+      this.columnsInfo[rowIndex] = {[columnIndex]:{status:'unvisited'}}
       return 
      }
-        this.columnsInfo[rowIndex][columnIndex]= {status:'clean'}
+        this.columnsInfo[rowIndex][columnIndex]= {status:'unvisited'}
   
        
     },
@@ -56,7 +58,7 @@ export const useBoardData = defineStore({
     changeColumnStatus(rowIndex:string,columnIndex:string,newStatus:string){
       // if status is start or target or bomb , remove the old point with that status and make it clean/unvisited
 
-    if(newStatus === 'start' || newStatus === 'target' || newStatus === 'bomb'){
+    if(newStatus === 'start' || newStatus === 'target' || newStatus === 'bomb' || newStatus === 'weight'){
      
        // change to unvisited the old interest point 
         // this.columnsInfo[]
