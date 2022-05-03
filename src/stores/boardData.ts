@@ -22,8 +22,8 @@ export const useBoardData = defineStore({
         finishPoint:{[key:string]:string} 
       }
     >{
-        rowsNumber : screen.width > 790 ? 28 :21,
-        columnsNumber : screen.width > 790 ? 75 : 32,
+        rowsNumber : screen.width > 990 ? screen.width > 1280 ? 29 : 29 : 27,//screen.width > 790 ? 28 :21,
+        columnsNumber : screen.width > 990 ? screen.width > 1280 ? 46 : 35 : 30,//screen.width > 790 ? 75 : 32,
         createdRows:0,
         createColumns: 0,
         columnsInfo:{},

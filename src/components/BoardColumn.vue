@@ -54,7 +54,7 @@ columnAspect.value = clickModeStatus.value
 
 <template>
 <!-- @mouseenter="changeColumnAspect" -->
-  <td  :class="[columnAspect,columnIndex]" @click="changeColumnStatus">
+  <td class="p-3"  :class="[columnAspect,columnIndex]" @click="changeColumnStatus">
                    
                   </td>
 </template>
@@ -63,10 +63,26 @@ columnAspect.value = clickModeStatus.value
 
 .wall{
      background-color: black;
+      
+  animation-name: roundToSquare;
+  animation-duration: 0.5s;
 }
 
 .void{
   background-color: blue;
+}
+
+@keyframes roundToSquare {
+  0%   {
+    transform: scale(0.3);
+    background-color: rgb(210, 195, 195);}
+
+  50%  {
+     transform: scale(1.2);
+    background-color: rgb(89, 89, 98);}
+  100% {
+    transform: scale(1.0);
+    background-color: rgb(7, 15, 7);}
 }
 
 </style>
