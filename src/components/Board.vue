@@ -51,11 +51,15 @@ function visualizeAlgorithm(){
 
 
 function changeTest(){ 
+ 
+let initialTimeout = 200
 
-        for(let i = 1;i< 10;i++){
+        for(let i = 1;i< 20;i++){
+                initialTimeout += 100
                 setTimeout(()=>{
   boardDataStore.changeColumnStatus( "1",  `${i}`,  "wall")   
-                },500)
+  
+                },initialTimeout)
              
         }
 
@@ -140,7 +144,7 @@ Clear Path
   Add Trap <div class="icon-container">&#9762;</div>
 </div> -->
 
-<button @click="changeTest" class="border-dark-800 border cursor-pointer hover:bg-black hover:text-white">12-55</button>
+<button @click="changeTest" class="border-dark-800 border cursor-pointer hover:bg-black hover:text-white">Test create one line</button>
         <table class="w-[97%]">
                 <tbody>
              
