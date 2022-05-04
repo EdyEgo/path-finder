@@ -33,8 +33,7 @@ const clickModeStatus = ref()
 
 
 
-const stringedIndexColumn = props.indexColumn.toString()
-const stringedIndexRow = props.indexRow.toString()
+
 const columnIndex = ref('column-' + props.indexColumn.toString())
 const columnAspect = ref<string>('')
 
@@ -57,7 +56,7 @@ function changeColumnStatus(){
   // here we gonna look at the options too see what modude is selected(ex wall , blackHole/bomb)
   // and on click or on hover or on click keept pressed change the column object and add that style to  
   // the columnAspect 
- boardStore.changeColumnStatus(stringedIndexRow,stringedIndexColumn,clickModeStatus.value)
+ boardStore.changeColumnStatus(props.indexRow,props.indexColumn,clickModeStatus.value)
 
 columnAspect.value = clickModeStatus.value
 }

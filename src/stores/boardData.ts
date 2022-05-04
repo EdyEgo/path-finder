@@ -13,6 +13,7 @@ interface NodeObjectType{
    isVisited: boolean, 
    isWall: boolean, 
    previousNode: any 
+   isBomb:boolean
 }
 
 export const useBoardData = defineStore({
@@ -116,6 +117,7 @@ export const useBoardData = defineStore({
       isVisited: false,
       isWall: false,
       previousNode: null,
+      isBomb:false
     };
   },
 
@@ -199,11 +201,11 @@ const visitedNodesInOrder = dijkstra(grid, startNode, finishNode);
     
   //   },
 
-  helperStatusChange(oldNodeObject:NodeObjectType,newGivenStatus:string){
+  helperNodeStatusChange(oldNodeObject:NodeObjectType,newGivenStatus:string){
      
      const givenStatusList:{[key:string]:()=>NodeObjectType} = {
        start:()=>{
-          return {...oldNodeObject,isWall:false,isVisited:false,isFinish:false,isStart:true}
+          return oldNodeObject ={...oldNodeObject,isWall:false,isVisited:false,isFinish:false,isStart:true}
 
        },
        target:()=>{
@@ -214,7 +216,13 @@ const visitedNodesInOrder = dijkstra(grid, startNode, finishNode);
        },
        bomb:()=>{
         return {...oldNodeObject,isWall:false,isVisited:false,isFinish:false,isStart:false,isBomb:true}
-       }
+       },
+       unvisited:()=>{
+        return {...oldNodeObject,isWall:false,isVisited:false,isFinish:false,isStart:false,isBomb:false}
+       },
+       visited:()=>{
+        return {...oldNodeObject,isWall:false,isVisited:true,isFinish:false,isStart:false,isBomb:false}
+      }
      }
 
      return givenStatusList[newGivenStatus]()
@@ -235,16 +243,18 @@ const visitedNodesInOrder = dijkstra(grid, startNode, finishNode);
 
        if(uniqueOldStatusRowIndex && uniqueOldStatusColumnIndex){
         // delete old unique node point
-        // this.columnsInfo[uniqueOldStatusRowIndex][uniqueOldStatusColumnIndex].status = 'unvisited'
-        this.grid[uniqueOldStatusRowIndex][uniqueOldStatusColumnIndex].isVisited = false
+        
+          // change status to the old node point
+          this.grid[uniqueOldStatusRowIndex][uniqueOldStatusColumnIndex] = this.helperNodeStatusChange(this.grid[uniqueOldStatusRowIndex][uniqueOldStatusColumnIndex],'unvisited')
+       
        }
   // add the new indexes to the unique node point
        this[`${newStatus}Point`] = [rowIndex,columnIndex]
 
-      // this[`${newStatus}Point`]  = new target or start or bomb point
+      
     }
  
-
+ // node example
     // col,
     // row,
     // isStart: row === this.START_NODE_ROW && col === this.START_NODE_COL,
@@ -255,9 +265,10 @@ const visitedNodesInOrder = dijkstra(grid, startNode, finishNode);
     // previousNode: null,
 
 
+     // change status to the edited node point
+     this.grid[rowIndex][columnIndex] = this.helperNodeStatusChange(this.grid[rowIndex][columnIndex],newStatus)
+     console.log('now my status is',this.grid[rowIndex][columnIndex])
     
-
-      this.columnsInfo[rowIndex][columnIndex].status = newStatus
   },
 
 
