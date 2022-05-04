@@ -125,26 +125,24 @@ export const useBoardData = defineStore({
   },
 
      testVisualizeDjkstra(){
-// this.columnsInfo[rowIndex][columnIndex]
 
-//// original  
 
  const grid = this.grid//this.getInitialGrid();
 
 
 
-  console.log('my grid is ',grid)
 
-const START_NODE_ROW = 10;
-const START_NODE_COL = 15;
-const FINISH_NODE_ROW = 10;
-const FINISH_NODE_COL = 35;
 
-const startNode = grid[START_NODE_ROW][START_NODE_COL];
-const finishNode = grid[FINISH_NODE_ROW][FINISH_NODE_COL];
+// const START_NODE_ROW = 10;
+// const START_NODE_COL = 15;
+// const FINISH_NODE_ROW = 10;
+// const FINISH_NODE_COL = 35;
+
+const startNode = grid[this.START_NODE_ROW][this.START_NODE_COL];
+const finishNode = grid[this.FINISH_NODE_ROW][this.FINISH_NODE_COL];
 const visitedNodesInOrder = dijkstra(grid, startNode, finishNode);
-// const nodesInShortestPathOrder = getNodesInShortestPathOrder(finishNode);
-
+const nodesInShortestPathOrder = getNodesInShortestPathOrder(finishNode);
+//     this.animateDijkstra(visitedNodesInOrder, nodesInShortestPathOrder);
 ////
 
 
