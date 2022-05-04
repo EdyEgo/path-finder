@@ -2,11 +2,37 @@
 // in which they were visited. Also makes nodes point back to their
 // previous node, effectively allowing us to compute the shortest path
 // by backtracking from the finish node.
+
+
+
+ // row[] , col/node?, yup the grid looks like so\
+//  [{
+//   col,
+//   row,
+//   isStart: row === START_NODE_ROW && col === START_NODE_COL,
+//   isFinish: row === FINISH_NODE_ROW && col === FINISH_NODE_COL,
+//   distance: Infinity,
+//   isVisited: false,
+//   isWall: false,
+//   previousNode: null,
+// },{
+//   col,
+//   row,
+//   isStart: row === START_NODE_ROW && col === START_NODE_COL,
+//   isFinish: row === FINISH_NODE_ROW && col === FINISH_NODE_COL,
+//   distance: Infinity,
+//   isVisited: false,
+//   isWall: false,
+//   previousNode: null,
+// }]
+
+
 export function dijkstra(grid:any, startNode:any, finishNode:any) {
    
      const visitedNodesInOrder = [];
      startNode.distance = 0;
      const unvisitedNodes = getAllNodes(grid);
+     console.log('unvizited nodes',unvisitedNodes)
      while (!!unvisitedNodes.length) {
        sortNodesByDistance(unvisitedNodes);
        const closestNode = unvisitedNodes.shift();
@@ -44,6 +70,7 @@ export function dijkstra(grid:any, startNode:any, finishNode:any) {
      return neighbors.filter(neighbor => !neighbor.isVisited);
    }
    
+   // soooo you need you nodes to be stored like sooo const nodes = [[1,2,3],[1,2,3]]
    function getAllNodes(grid:any) {
      const nodes = [];
      for (const row of grid) {

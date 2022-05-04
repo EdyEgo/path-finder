@@ -7,20 +7,21 @@ const boardDataStore = useBoardData()
 
 
 const props = defineProps<{
-  
+  rowColumnsList:any[]
   indexRow:number
 }>()
 
 
-const columnsNumber = ref(boardDataStore.$state.columnsNumber)
+
 </script>
 
 
 <template>
 
                <tr >
-                 
-                  <BoardColumn class="border  border-[#C572FF] column-element"  v-for="indexColumn in columnsNumber" :key="indexColumn" :indexColumn="indexColumn" :indexRow="props.indexRow"/>
+               
+                  <BoardColumn class="border  border-[#C572FF] column-element"  v-for="(nodeColumnObject,indexColumn) in rowColumnsList" :key="indexColumn" :indexColumn="indexColumn" :indexRow="props.indexRow" :nodeColumnObject="nodeColumnObject"/>
+                  
                 </tr>
 
 </template>

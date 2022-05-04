@@ -48,7 +48,16 @@ const typeNodesSelectedClass = reactive<{[key:string]:string}>({
 
 
 const rowsNumber = ref(boardDataStore.$state.rowsNumber)
-const columnsNumber = ref(boardDataStore.$state.columnsNumber)
+const grid = ref([])
+
+
+onMounted(()=>{
+        // create initial grid
+        boardDataStore.getInitialGrid()
+        grid.value = boardDataStore.$state.grid
+        console.log('my grid looks very much like soo',grid.value)
+})
+
 
 function visualizeAlgorithm(){
         if( algorithmSelected.disabled){
@@ -93,32 +102,32 @@ function changeClickBoardMode(newMode:string){
 </script>
 
 <template>
-<div class="legend  border-b-2 pb-2 flex flex-col gap-2">
+<div class="flex flex-col gap-2 pb-2 border-b-2 legend">
 
 <div class="title-types-container">
 Node types:
 </div>
 
-<div class="content-nodes-container flex flex-col gap-4">
-<div class="btn-nodes-container flex justify-between">
-<div :class="typeNodesSelectedClass.start" class="flex mx-1 items-center cursor-pointer  pb-2 border-b  hover:border-black transition-all ease" @click="changeClickBoardMode('start')">Start Node <div class=" mx-2 my-1  border 
+<div class="flex flex-col gap-4 content-nodes-container">
+<div class="flex justify-between btn-nodes-container">
+<div :class="typeNodesSelectedClass.start" class="flex items-center pb-2 mx-1 transition-all border-b cursor-pointer hover:border-black ease" @click="changeClickBoardMode('start')">Start Node <div class=" mx-2 my-1  border 
  border-[#C572FF]">&#128640</div></div>
 
-<div :class="typeNodesSelectedClass.target" class="flex mx-1 items-center cursor-pointer pb-2 border-b  hover:border-black transition-all ease" @click="changeClickBoardMode('target')">Target Node <div class=" mx-2 my-1  border border-[#C572FF]">&#127919</div></div>
-<div :class="typeNodesSelectedClass.trap" class="flex mx-1 items-center cursor-pointer pb-2 border-b  hover:border-black transition-all ease" @click="changeClickBoardMode('bomb')">Trap Node <div class="px-1 mx-2 my-1  border border-[#C572FF]">&#9762;</div></div>
+<div :class="typeNodesSelectedClass.target" class="flex items-center pb-2 mx-1 transition-all border-b cursor-pointer hover:border-black ease" @click="changeClickBoardMode('target')">Target Node <div class=" mx-2 my-1  border border-[#C572FF]">&#127919</div></div>
+<div :class="typeNodesSelectedClass.trap" class="flex items-center pb-2 mx-1 transition-all border-b cursor-pointer hover:border-black ease" @click="changeClickBoardMode('bomb')">Trap Node <div class="px-1 mx-2 my-1  border border-[#C572FF]">&#9762;</div></div>
 <!-- &#9875; -->
-<div :class="typeNodesSelectedClass.weight" class="flex mx-1 items-center cursor-pointer pb-2 border-b hover:border-black transition-all ease" @click="changeClickBoardMode('weight')">Weighted Node <div class=" mx-2 my-1  border border-[#C572FF]">&#9875;</div></div>
-<div :class="typeNodesSelectedClass.wall" class="flex mx-1 items-center cursor-pointer pb-2 border-b hover:border-black transition-all ease" @click="changeClickBoardMode('wall')">Wall Node <div class="p-2 mx-2 my-1 bg-black border border-[#C572FF]"></div></div>
+<div :class="typeNodesSelectedClass.weight" class="flex items-center pb-2 mx-1 transition-all border-b cursor-pointer hover:border-black ease" @click="changeClickBoardMode('weight')">Weighted Node <div class=" mx-2 my-1  border border-[#C572FF]">&#9875;</div></div>
+<div :class="typeNodesSelectedClass.wall" class="flex items-center pb-2 mx-1 transition-all border-b cursor-pointer hover:border-black ease" @click="changeClickBoardMode('wall')">Wall Node <div class="p-2 mx-2 my-1 bg-black border border-[#C572FF]"></div></div>
 
 </div>
 
-<div class="informal-nodes-container flex  justify-between">
-<div class="flex mx-1 items-center">Unvisited Node <div class="p-2 mx-2 my-1  border border-[#C572FF]"></div></div>
-<div class="flex mx-1 items-center">Visited Nodes 
+<div class="flex justify-between informal-nodes-container">
+<div class="flex items-center mx-1">Unvisited Node <div class="p-2 mx-2 my-1  border border-[#C572FF]"></div></div>
+<div class="flex items-center mx-1">Visited Nodes 
 <div class="p-2 mx-2 my-1 bg-[#C572FF] border border-[#C572FF]"></div>
 <div class="p-2 mx-2 my-1 bg-red-400 border border-[#C572FF]"></div>
 </div>
-<div class="flex mx-1 items-center">Shortest-path Node <div class="p-2 mx-2 my-1 bg-blue-400 border border-[#C572FF]"></div></div>
+<div class="flex items-center mx-1">Shortest-path Node <div class="p-2 mx-2 my-1 bg-blue-400 border border-[#C572FF]"></div></div>
 
 
 </div>
@@ -127,20 +136,20 @@ Node types:
 
 
 </div>
-<div class="board-commands pt-2">
-<div class="title-container text-center p-2">General Commands</div>
-<div class="general-commands-container flex gap-2 justify-center text-md">
+<div class="pt-2 board-commands">
+<div class="p-2 text-center title-container">General Commands</div>
+<div class="flex justify-center gap-2 general-commands-container text-md">
 
-<div class="p-2 border rounded-sm cursor-pointer hover:bg-gray-200 ease transition-all">
+<div class="p-2 transition-all border rounded-sm cursor-pointer hover:bg-gray-200 ease">
  Clear Board
 </div>
-<div class="p-2 border rounded-sm 0 cursor-pointer hover:bg-gray-200 ease transition-all">
+<div class="p-2 transition-all border rounded-sm cursor-pointer 0 hover:bg-gray-200 ease">
  Clear Walls & Weights
 </div>
-<div class="p-2 border rounded-sm  cursor-pointer hover:bg-gray-200 ease transition-all">
+<div class="p-2 transition-all border rounded-sm cursor-pointer hover:bg-gray-200 ease">
 Clear Path
 </div>
-<div @click="visualizeAlgorithm" :class="algorithmSelected.disabled ? 'hover:bg-red-700': 'hover:bg-blue-700'" class="p-2 border rounded-sm bg-blue-600 text-white  cursor-pointer  ease transition-all">
+<div @click="visualizeAlgorithm" :class="algorithmSelected.disabled ? 'hover:bg-red-700': 'hover:bg-blue-700'" class="p-2 text-white transition-all bg-blue-600 border rounded-sm cursor-pointer ease">
 {{algorithmSelected.buttonText}}
 </div>
 </div>
@@ -152,12 +161,15 @@ Clear Path
   Add Trap <div class="icon-container">&#9762;</div>
 </div> -->
 <button @click="testAlgoritm">Test Djkstra Algorithm</button>
-<button @click="changeTest" class="border-dark-800 border cursor-pointer hover:bg-black hover:text-white">Test create one wall line</button>
+<button @click="changeTest" class="border cursor-pointer border-dark-800 hover:bg-black hover:text-white">Test create one wall line</button>
         <table class="w-[97%]">
-                <tbody>
+                <tbody v-if="grid.length > 0">
              
-
-                <BoardRow  :class="`row-${indexRow}`"  v-for="indexRow in rowsNumber" :key="indexRow" :indexRow="indexRow"/>
+              
+                <!-- <BoardRow  :class="`row-${indexRow}`"  v-for="indexRow in rowsNumber" :key="indexRow" :indexRow="indexRow"/> -->
+   
+     <!-- grid ex grid array [row[node{},node{}],row[node{},node{}]] -->
+                        <BoardRow  :class="`row-${indexRow}`"  v-for="(currentRow,indexRow) in grid" :key="indexRow" :indexRow="indexRow" :rowColumnsList="currentRow"/>
                 </tbody>
         </table>
 </template>
