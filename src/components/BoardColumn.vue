@@ -41,11 +41,13 @@ onMounted(() => {
 
 // boardStore.createInitialRowWithColumnInfo(stringedIndexRow,stringedIndexColumn)
 
-//   watchEffect(() => {
+  watchEffect(() => {
+    // indexColumn:number,
+  // indexRow:number
  
-//    boardStore.$state.columnsInfo[stringedIndexRow][stringedIndexColumn].status// watch the status
-//     columnAspect.value  = boardStore.$state.columnsInfo[stringedIndexRow][stringedIndexColumn].status
-//  })
+   boardStore.$state.grid[props.indexRow][props.indexColumn]// watch the status
+    columnAspect.value  = boardStore.$state.grid[props.indexRow][props.indexColumn].status
+ })
 
 })
 

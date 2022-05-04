@@ -69,16 +69,16 @@ function visualizeAlgorithm(){
 
 function changeTest(){ 
  
-// let initialTimeout = 200
+let initialTimeout = 200
 
-//         for(let i = 1;i< 20;i++){
-//                 initialTimeout += 100
-//                 setTimeout(()=>{
-//   boardDataStore.changeColumnStatus( "1",  `${i}`,  "wall")   
+        for(let i = 1;i< 20;i++){
+                initialTimeout += 100
+                setTimeout(()=>{
+  boardDataStore.changeColumnStatus( 1,  i,  "wall")   
   
-//                 },initialTimeout)
+                },initialTimeout)
              
-//         }
+        }
 
 }
 

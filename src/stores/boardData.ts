@@ -14,6 +14,7 @@ interface NodeObjectType{
    isWall: boolean, 
    previousNode: any 
    isBomb:boolean
+   status:string
 }
 
 export const useBoardData = defineStore({
@@ -117,7 +118,8 @@ export const useBoardData = defineStore({
       isVisited: false,
       isWall: false,
       previousNode: null,
-      isBomb:false
+      isBomb:false,
+      status:'unvisited'
     };
   },
 
@@ -205,23 +207,23 @@ const visitedNodesInOrder = dijkstra(grid, startNode, finishNode);
      
      const givenStatusList:{[key:string]:()=>NodeObjectType} = {
        start:()=>{
-          return oldNodeObject ={...oldNodeObject,isWall:false,isVisited:false,isFinish:false,isStart:true}
+          return oldNodeObject ={...oldNodeObject,isWall:false,isVisited:false,isFinish:false,isStart:true,status:newGivenStatus}
 
        },
        target:()=>{
-         return {...oldNodeObject,isWall:false,isVisited:false,isFinish:true,isStart:false}
+         return {...oldNodeObject,isWall:false,isVisited:false,isFinish:true,isStart:false,status:newGivenStatus}
        },
        wall:()=>{
-        return {...oldNodeObject,isWall:true,isVisited:false,isFinish:false,isStart:false}
+        return {...oldNodeObject,isWall:true,isVisited:false,isFinish:false,isStart:false,status:newGivenStatus}
        },
        bomb:()=>{
-        return {...oldNodeObject,isWall:false,isVisited:false,isFinish:false,isStart:false,isBomb:true}
+        return {...oldNodeObject,isWall:false,isVisited:false,isFinish:false,isStart:false,isBomb:true,status:newGivenStatus}
        },
        unvisited:()=>{
-        return {...oldNodeObject,isWall:false,isVisited:false,isFinish:false,isStart:false,isBomb:false}
+        return {...oldNodeObject,isWall:false,isVisited:false,isFinish:false,isStart:false,isBomb:false,status:newGivenStatus}
        },
        visited:()=>{
-        return {...oldNodeObject,isWall:false,isVisited:true,isFinish:false,isStart:false,isBomb:false}
+        return {...oldNodeObject,isWall:false,isVisited:true,isFinish:false,isStart:false,isBomb:false,status:newGivenStatus}
       }
      }
 
@@ -267,7 +269,8 @@ const visitedNodesInOrder = dijkstra(grid, startNode, finishNode);
 
      // change status to the edited node point
      this.grid[rowIndex][columnIndex] = this.helperNodeStatusChange(this.grid[rowIndex][columnIndex],newStatus)
-     console.log('now my status is',this.grid[rowIndex][columnIndex])
+    
+     return this.grid[rowIndex][columnIndex]
     
   },
 
