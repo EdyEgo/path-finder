@@ -13,17 +13,7 @@ const props = defineProps<{
 }>()
 
 const clickModeStatus = ref()
-// const contentColumnModeHTMLEntity = {
-//   start:false,
-  
-//   target:'&#127919',
-//   trap:'&#9762;',
-//   weight:'&#9875;',
-//   wall:'',
-//   visited:'',
-//   unvisited:'',
 
-// } 
 
  watchEffect(() => {
    optionsStore.selectedMode
@@ -37,19 +27,16 @@ const clickModeStatus = ref()
 const columnIndex = ref('column-' + props.indexColumn.toString())
 const columnAspect = ref<string>('')
 
-onMounted(() => {
 
-// boardStore.createInitialRowWithColumnInfo(stringedIndexRow,stringedIndexColumn)
 
   watchEffect(() => {
-    // indexColumn:number,
-  // indexRow:number
+  
  
    boardStore.$state.grid[props.indexRow][props.indexColumn]// watch the status
     columnAspect.value  = boardStore.$state.grid[props.indexRow][props.indexColumn].status
  })
 
-})
+
 
 
 

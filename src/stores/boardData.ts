@@ -256,15 +256,7 @@ const visitedNodesInOrder = dijkstra(grid, startNode, finishNode);
       
     }
  
- // node example
-    // col,
-    // row,
-    // isStart: row === this.START_NODE_ROW && col === this.START_NODE_COL,
-    // isFinish: row === this.FINISH_NODE_ROW && col === this.FINISH_NODE_COL,
-    // distance: Infinity,
-    // isVisited: false,
-    // isWall: false,
-    // previousNode: null,
+ 
 
 
      // change status to the edited node point
