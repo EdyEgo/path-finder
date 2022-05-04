@@ -50,13 +50,30 @@ const typeNodesSelectedClass = reactive<{[key:string]:string}>({
 const rowsNumber = ref(boardDataStore.$state.rowsNumber)
 const grid = ref([])
 
+// general functions
+function createFreshBoard(){
+          boardDataStore.getInitialGrid()
+        grid.value = boardDataStore.$state.grid
+}
+
+function clearPath(){
+         boardDataStore.clearPath()
+         grid.value = boardDataStore.$state.grid
+}
+
+function clearWallAndWeights(){
+         boardDataStore.clearWallsAndWeights()
+         grid.value = boardDataStore.$state.grid
+}
 
 onMounted(()=>{
         // create initial grid
-        boardDataStore.getInitialGrid()
-        grid.value = boardDataStore.$state.grid
+        createFreshBoard()
         console.log('my grid looks very much like soo',grid.value)
 })
+
+
+
 
 
 function visualizeAlgorithm(){
@@ -140,13 +157,13 @@ Node types:
 <div class="p-2 text-center title-container">General Commands</div>
 <div class="flex justify-center gap-2 general-commands-container text-md">
 
-<div class="p-2 transition-all border rounded-sm cursor-pointer hover:bg-gray-200 ease">
+<div class="p-2 transition-all border rounded-sm cursor-pointer hover:bg-gray-200 ease" @click="createFreshBoard">
  Clear Board
 </div>
-<div class="p-2 transition-all border rounded-sm cursor-pointer 0 hover:bg-gray-200 ease">
+<div class="p-2 transition-all border rounded-sm cursor-pointer 0 hover:bg-gray-200 ease" @click="clearWallAndWeights">
  Clear Walls & Weights
 </div>
-<div class="p-2 transition-all border rounded-sm cursor-pointer hover:bg-gray-200 ease">
+<div class="p-2 transition-all border rounded-sm cursor-pointer hover:bg-gray-200 ease" @click="clearPath">
 Clear Path
 </div>
 <div @click="visualizeAlgorithm" :class="algorithmSelected.disabled ? 'hover:bg-red-700': 'hover:bg-blue-700'" class="p-2 text-white transition-all bg-blue-600 border rounded-sm cursor-pointer ease">

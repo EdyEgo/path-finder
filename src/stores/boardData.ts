@@ -14,6 +14,7 @@ interface NodeObjectType{
    isWall: boolean, 
    previousNode: any 
    isBomb:boolean
+   isWeight:boolean
    status:string
 }
 
@@ -219,6 +220,12 @@ const visitedNodesInOrder = dijkstra(grid, startNode, finishNode);
        bomb:()=>{
         return {...oldNodeObject,isWall:false,isVisited:false,isFinish:false,isStart:false,isBomb:true,status:newGivenStatus}
        },
+       weight:()=>{
+        return {...oldNodeObject,isWall:false,isVisited:false,isFinish:false,isStart:false,isBomb:false,isWeight:true,status:newGivenStatus}
+       },
+       clearWeightAndWall:()=>{
+         return {...oldNodeObject,isWall:false,isVisited:false,isFinish:false,isStart:false,isWeight:false,status:'unvisited'}
+       },
        unvisited:()=>{
         return {...oldNodeObject,isWall:false,isVisited:false,isFinish:false,isStart:false,isBomb:false,status:newGivenStatus}
        },
@@ -229,6 +236,30 @@ const visitedNodesInOrder = dijkstra(grid, startNode, finishNode);
 
      return givenStatusList[newGivenStatus]()
 
+  },
+
+  clearWallsAndWeights(){
+   const clearedNodes =   this.grid.map((row:any)=>{
+      return row.map((nodeObject:NodeObjectType)=>{
+         if(nodeObject.isWall || nodeObject.isWeight){
+          return this.helperNodeStatusChange(nodeObject,'clearWeightAndWall')
+         }
+         return nodeObject
+      })
+     })
+     this.grid = clearedNodes
+  },
+
+  clearPath(){
+    // makes all visited nodes , unvisited
+    const clearedNodes =   this.grid.map((row:any)=>{
+      return row.map((nodeObject:NodeObjectType)=>{
+       
+         return this.helperNodeStatusChange(nodeObject,'unvisited')
+      })
+     })
+     this.grid = clearedNodes
+      
   },
 
   changeColumnStatus(rowIndex:number,columnIndex:number,newStatus:string){
