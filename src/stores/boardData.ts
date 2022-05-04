@@ -98,7 +98,7 @@ export const useBoardData = defineStore({
 
 
   getInitialGrid  () {
-  
+   this.grid = []
     for (let row = 0; row < this.rowsNumber; row++) {
       let currentRow = []
       for (let col = 0; col < this.columnsNumber; col++) {
@@ -254,8 +254,10 @@ const visitedNodesInOrder = dijkstra(grid, startNode, finishNode);
     // makes all visited nodes , unvisited
     const clearedNodes =   this.grid.map((row:any)=>{
       return row.map((nodeObject:NodeObjectType)=>{
-       
-         return this.helperNodeStatusChange(nodeObject,'unvisited')
+       if(nodeObject.isVisited){
+        return this.helperNodeStatusChange(nodeObject,'unvisited')
+       }
+        return nodeObject
       })
      })
      this.grid = clearedNodes

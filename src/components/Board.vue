@@ -69,7 +69,7 @@ function clearWallAndWeights(){
 onMounted(()=>{
         // create initial grid
         createFreshBoard()
-        console.log('my grid looks very much like soo',grid.value)
+      
 })
 
 
