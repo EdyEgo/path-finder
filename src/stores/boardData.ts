@@ -1,22 +1,22 @@
 import { defineStore } from 'pinia'
 import {dijkstra,getNodesInShortestPathOrder} from '@/algorithms/dijkstra' 
-
+import type { NodeObjectType} from '@/types/algorithms'
 interface ColumnInfo{
     status:string
 }
 
-interface NodeObjectType{
-   col: number,
-   row: number,
-   isStart: boolean, 
-   isFinish: boolean, distance: number, 
-   isVisited: boolean, 
-   isWall: boolean, 
-   previousNode: any 
-   isBomb:boolean
-   isWeight:boolean
-   status:string
-}
+// interface NodeObjectType{
+//    col: number,
+//    row: number,
+//    isStart: boolean, 
+//    isFinish: boolean, distance: number, 
+//    isVisited: boolean, 
+//    isWall: boolean, 
+//    previousNode: any 
+//    isBomb:boolean
+//    isWeight:boolean
+//    status:string
+// }
 
 export const useBoardData = defineStore({
   id: 'columnsData',

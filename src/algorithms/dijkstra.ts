@@ -4,6 +4,8 @@
 // by backtracking from the finish node.
 
 
+import type { NodeObjectType} from '@/types/algorithms'
+
 
  // row[] , col/node?, yup the grid looks like so\
 //  [{
@@ -92,4 +94,54 @@ export function dijkstra(grid:any, startNode:any, finishNode:any) {
      }
      return nodesInShortestPathOrder;
    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   export function myDijkstra(grid:[NodeObjectType][],startNode:NodeObjectType){
+       startNode.distance = 0
+      const unvisitedNodes = myGetAllNodes(grid)
+   }
+
+
+ function myGetAllNodes(grid:[NodeObjectType][]){
+     const nodes:NodeObjectType[] = []
+
+     grid.forEach((row)=>{
+        row.forEach((node)=>{
+          nodes.push(node)
+        })
+     })
+     return nodes
+ }
    
