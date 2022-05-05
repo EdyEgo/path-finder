@@ -65,11 +65,11 @@ export function dijkstra(grid:any, startNode:any, finishNode:any) {
    function getUnvisitedNeighbors(node:any, grid:any) {
      const neighbors = [];
      const {col, row} = node;
-     if (row > 0) neighbors.push(grid[row - 1][col]);
-     if (row < grid.length - 1) neighbors.push(grid[row + 1][col]);
-     if (col > 0) neighbors.push(grid[row][col - 1]);
-     if (col < grid[0].length - 1) neighbors.push(grid[row][col + 1]);
-     return neighbors.filter(neighbor => !neighbor.isVisited);
+     if (row > 0) neighbors.push(grid[row - 1][col]); // check up
+     if (row < grid.length - 1) neighbors.push(grid[row + 1][col]); // check down 
+     if (col > 0) neighbors.push(grid[row][col - 1]);// check left 
+     if (col < grid[0].length - 1) neighbors.push(grid[row][col + 1]); // check right // its grid[0] because you have the guarantee that the first row will always exists
+     return neighbors.filter(neighbor => !neighbor.isVisited); // return only the unVisited nodes(filter them in an array list)
    }
    
    // soooo you need you nodes to be stored like sooo const nodes = [[1,2,3],[1,2,3]]
@@ -130,7 +130,13 @@ export function dijkstra(grid:any, startNode:any, finishNode:any) {
 
    export function myDijkstra(grid:[NodeObjectType][],startNode:NodeObjectType){
        startNode.distance = 0
-      const unvisitedNodes = myGetAllNodes(grid)
+      const unvisitedNodes = myGetAllNodes(grid) 
+
+      while(!!unvisitedNodes){
+
+      }
+
+
    }
 
 

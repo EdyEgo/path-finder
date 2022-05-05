@@ -146,7 +146,22 @@ function breathFirstSearch(start){
 
 }
 
-breathFirstSearch('Cazaneasca')
+// breathFirstSearch('Cazaneasca')
+
+
+// just a test man
+// const anotherTest = [[{test:'hello',num:2},{test:'hello',num:1},{test:'hello',num:4},{test:'hello',num:3}]]
+
+// const sortThisPuppy = anotherTest[0].sort((objectA,objectB)=> objectA.num -objectB.num)
+
+
+
+// sortThisPuppy.forEach((objectTest)=>{
+//  if(objectTest.num !== 1) objectTest.test = 'hey son'
+// })
+// just a test man
+// now anotherTest will have the test property equal with hey son , because these objects are stored in the same memory space , remember?
+
 
 
 // testing a while loop 
