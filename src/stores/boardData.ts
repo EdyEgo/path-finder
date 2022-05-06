@@ -102,6 +102,7 @@ export const useBoardData = defineStore({
     for (let row = 0; row < this.rowsNumber; row++) {
       let currentRow = []
       for (let col = 0; col < this.columnsNumber; col++) {
+
         currentRow.push(this.createNode(col, row));
       }
       this.grid.push(currentRow);
@@ -110,17 +111,20 @@ export const useBoardData = defineStore({
   },
   
   createNode (col:number, row:number):any {
+     
+   const isStart =  row === this.START_NODE_ROW && col === this.START_NODE_COL;
+   const isFinish = row === this.FINISH_NODE_ROW && col === this.FINISH_NODE_COL;
     return {
       col,
       row,
-      isStart: row === this.START_NODE_ROW && col === this.START_NODE_COL,
-      isFinish: row === this.FINISH_NODE_ROW && col === this.FINISH_NODE_COL,
+      isStart,
+      isFinish,
       distance: Infinity,
       isVisited: false,
       isWall: false,
       previousNode: null,
       isBomb:false,
-      status:'unvisited'
+      status: isStart ? 'start' : isFinish ? 'target' : 'unvisited'
     };
   },
 

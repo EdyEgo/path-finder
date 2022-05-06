@@ -5,7 +5,9 @@
 
 
 import type { NodeObjectType} from '@/types/algorithms'
+import {animationTimeHelper} from '@/services/animationHelpers'
 
+// import {useAnimationHelper } from '@/stores/animations'
 
  // row[] , col/node?, yup the grid looks like so\
 //  [{
@@ -28,9 +30,10 @@ import type { NodeObjectType} from '@/types/algorithms'
 //   previousNode: null,
 // }]
 
-
-export function dijkstra(grid:any, startNode:any, finishNode:any) {
-   
+//  const {useAnimationHelper} = await import('@/stores/animations')
+//      const animationStore = useAnimationHelper()
+export async function dijkstra(grid:any, startNode:any, finishNode:any) {
+    
      const visitedNodesInOrder = [];
      startNode.distance = 0;
      const unvisitedNodes = getAllNodes(grid);
@@ -44,6 +47,9 @@ export function dijkstra(grid:any, startNode:any, finishNode:any) {
        // we must be trapped and should therefore stop.
        if (closestNode.distance === Infinity) return visitedNodesInOrder;
        closestNode.isVisited = true;
+      // animation helper
+      animationTimeHelper(closestNode,closestNode.status + ' visited')
+      //  closestNode.status =  closestNode.status + ' visited'
        visitedNodesInOrder.push(closestNode);
        if (closestNode === finishNode) return visitedNodesInOrder;
        updateUnvisitedNeighbors(closestNode, grid);

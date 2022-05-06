@@ -20,7 +20,7 @@ const props = defineProps<{
 
                <tr >
                
-                  <BoardColumn class="border  border-[#C572FF] column-element"  v-for="(nodeColumnObject,indexColumn) in rowColumnsList" :key="indexColumn" :indexColumn="indexColumn" :indexRow="props.indexRow" :nodeColumnObject="nodeColumnObject"/>
+                  <BoardColumn class="border  border-[rgb(99,97,97)] column-element"  v-for="(nodeColumnObject,indexColumn) in rowColumnsList" :key="indexColumn" :indexColumn="indexColumn" :indexRow="props.indexRow" :nodeColumnObject="nodeColumnObject"/>
                   
                 </tr>
 

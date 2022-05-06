@@ -5,13 +5,14 @@ import BoardColumn from '../components/BoardColumn.vue'
 import BoardRow from '../components/BoardRow.vue'
 import {useOptions} from '../stores/options'
 import {useBoardData} from  '../stores/boardData'
-
-
+import  {useAnimationHelper}  from '@/stores/animations'
+    
  
 
 
 const optionsStore = useOptions()
 const boardDataStore = useBoardData()
+//  const animationStore = useAnimationHelper()
 
 
 function testAlgoritm(){
@@ -128,23 +129,23 @@ Node types:
 <div class="flex flex-col gap-4 content-nodes-container">
 <div class="flex justify-between btn-nodes-container">
 <div :class="typeNodesSelectedClass.start" class="flex items-center pb-2 mx-1 transition-all border-b cursor-pointer hover:border-black ease" @click="changeClickBoardMode('start')">Start Node <div class=" mx-2 my-1  border 
- border-[#C572FF]">&#128640</div></div>
+ border-[rgb(99,97,97)]">&#128640</div></div>
 
-<div :class="typeNodesSelectedClass.target" class="flex items-center pb-2 mx-1 transition-all border-b cursor-pointer hover:border-black ease" @click="changeClickBoardMode('target')">Target Node <div class=" mx-2 my-1  border border-[#C572FF]">&#127919</div></div>
-<div :class="typeNodesSelectedClass.trap" class="flex items-center pb-2 mx-1 transition-all border-b cursor-pointer hover:border-black ease" @click="changeClickBoardMode('bomb')">Trap Node <div class="px-1 mx-2 my-1  border border-[#C572FF]">&#9762;</div></div>
+<div :class="typeNodesSelectedClass.target" class="flex items-center pb-2 mx-1 transition-all border-b cursor-pointer hover:border-black ease" @click="changeClickBoardMode('target')">Target Node <div class=" mx-2 my-1  border border-[rgb(99,97,97)]">&#127919</div></div>
+<div :class="typeNodesSelectedClass.trap" class="flex items-center pb-2 mx-1 transition-all border-b cursor-pointer hover:border-black ease" @click="changeClickBoardMode('bomb')">Trap Node <div class="px-1 mx-2 my-1  border border-[rgb(99,97,97)]">&#9762;</div></div>
 <!-- &#9875; -->
-<div :class="typeNodesSelectedClass.weight" class="flex items-center pb-2 mx-1 transition-all border-b cursor-pointer hover:border-black ease" @click="changeClickBoardMode('weight')">Weighted Node <div class=" mx-2 my-1  border border-[#C572FF]">&#9875;</div></div>
-<div :class="typeNodesSelectedClass.wall" class="flex items-center pb-2 mx-1 transition-all border-b cursor-pointer hover:border-black ease" @click="changeClickBoardMode('wall')">Wall Node <div class="p-2 mx-2 my-1 bg-black border border-[#C572FF]"></div></div>
+<div :class="typeNodesSelectedClass.weight" class="flex items-center pb-2 mx-1 transition-all border-b cursor-pointer hover:border-black ease" @click="changeClickBoardMode('weight')">Weighted Node <div class=" mx-2 my-1  border border-[rgb(99,97,97)]">&#9875;</div></div>
+<div :class="typeNodesSelectedClass.wall" class="flex items-center pb-2 mx-1 transition-all border-b cursor-pointer hover:border-black ease" @click="changeClickBoardMode('wall')">Wall Node <div class="p-2 mx-2 my-1 bg-black border border-[rgb(99,97,97)]"></div></div>
 
 </div>
 
 <div class="flex justify-between informal-nodes-container">
-<div class="flex items-center mx-1">Unvisited Node <div class="p-2 mx-2 my-1  border border-[#C572FF]"></div></div>
+<div class="flex items-center mx-1">Unvisited Node <div class="p-2 mx-2 my-1  border border-[rgb(99,97,97)]"></div></div>
 <div class="flex items-center mx-1">Visited Nodes 
-<div class="p-2 mx-2 my-1 bg-[#C572FF] border border-[#C572FF]"></div>
-<div class="p-2 mx-2 my-1 bg-red-400 border border-[#C572FF]"></div>
+<div class="p-2 mx-2 my-1 bg-[#C572FF] border border-[rgb(99,97,97)]"></div>
+<div class="p-2 mx-2 my-1 bg-red-400 border border-[rgb(99,97,97)]"></div>
 </div>
-<div class="flex items-center mx-1">Shortest-path Node <div class="p-2 mx-2 my-1 bg-blue-400 border border-[#C572FF]"></div></div>
+<div class="flex items-center mx-1">Shortest-path Node <div class="p-2 mx-2 my-1 bg-blue-400 border border-[rgb(99,97,97)]"></div></div>
 
 
 </div>
