@@ -137,43 +137,7 @@ export const useBoardData = defineStore({
     };
   },
 
-     testVisualizeDjkstra(){
-
-
- const grid = this.grid//this.getInitialGrid();
-
-
-
-
-
-
-
-const startNode = grid[this.START_NODE_ROW][this.START_NODE_COL];
-const finishNode = grid[this.FINISH_NODE_ROW][this.FINISH_NODE_COL];
-const visitedNodesInOrder = dijkstra(grid, startNode, finishNode);
-const nodesInShortestPathOrder = getNodesInShortestPathOrder(finishNode);
-//     this.animateDijkstra(visitedNodesInOrder, nodesInShortestPathOrder);
-////
-
-
-      // const grid = this.columnsInfo;
-//       if(!this.startPoint[0] || !this.startPoint[1] || !this.targetPoint[0] || !this.targetPoint[1])  return null
-//       const startNodeRow = this.startPoint[0]
-//       const startNodeCol = this.startPoint[1]
-//       const finishNodeRow = this.targetPoint[0] // target/finish same thing
-//       const finishNodeCol =  this.targetPoint[1]
-
-//      const startNode = this.columnsInfo[startNodeRow][startNodeCol] 
-// const finishNode = this.columnsInfo[finishNodeRow][finishNodeCol] 
-
-
-//       const visitedNodesInOrder = dijkstra(grid, startNode, finishNode);
-      console.log('O_o it works ???',visitedNodesInOrder)
-  //     this.animateDijkstra(visitedNodesInOrder, nodesInShortestPathOrder);
-    
-  
-  
-  }, 
+ 
 
   
   visualizeDjkstra(){
@@ -241,7 +205,17 @@ const nodesInShortestPathOrder = getNodesInShortestPathOrder(finishNode);
        },
        visited:()=>{
         return {...oldNodeObject,isWall:false,isVisited:true,isFinish:false,isStart:false,isBomb:false,status:newGivenStatus}
-      }
+      },
+      un_start:()=>{
+       return {...oldNodeObject,isStart:false,status:newGivenStatus}
+      },
+      un_target:()=>{
+        return {...oldNodeObject,isFinish:false,status:newGivenStatus}
+      },
+      un_bomb:()=>{
+        return {...oldNodeObject,isBomb:false,status:newGivenStatus}
+      },
+      
      }
 
      return givenStatusList[newGivenStatus]()
@@ -319,7 +293,7 @@ const algorithmsList:{[key:string]:()=>void} = {
         // delete old unique node point
         
           // change status to the old node point
-          this.grid[uniqueOldStatusRowIndex][uniqueOldStatusColumnIndex] = this.helperNodeStatusChange(this.grid[uniqueOldStatusRowIndex][uniqueOldStatusColumnIndex],'unvisited')
+          this.grid[uniqueOldStatusRowIndex][uniqueOldStatusColumnIndex] = this.helperNodeStatusChange(this.grid[uniqueOldStatusRowIndex][uniqueOldStatusColumnIndex],'un_' + newStatus)
        
        }
   // add the new indexes to the unique node point

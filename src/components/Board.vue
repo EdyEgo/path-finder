@@ -15,9 +15,7 @@ const boardDataStore = useBoardData()
 //  const animationStore = useAnimationHelper()
 
 
-function testAlgoritm(){
-        boardDataStore.testVisualizeDjkstra()
-}
+
 
 
 const algorithmSelected =reactive({
@@ -208,7 +206,7 @@ Clear Path
 <!-- <div class="flex">
   Add Trap <div class="icon-container">&#9762;</div>
 </div> -->
-<button @click="testAlgoritm">Test Djkstra Algorithm</button>
+
 <button @click="changeTest" class="border cursor-pointer border-dark-800 hover:bg-black hover:text-white">Test create one wall line</button>
         <table class="w-[97%]">
                 <tbody v-if="grid.length > 0">
