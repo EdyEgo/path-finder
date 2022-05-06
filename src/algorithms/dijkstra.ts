@@ -7,31 +7,7 @@
 import type { NodeObjectType} from '@/types/algorithms'
 import {animationTimeHelper} from '@/services/animationHelpers'
 
-// import {useAnimationHelper } from '@/stores/animations'
 
- // row[] , col/node?, yup the grid looks like so\
-//  [{
-//   col,
-//   row,
-//   isStart: row === START_NODE_ROW && col === START_NODE_COL,
-//   isFinish: row === FINISH_NODE_ROW && col === FINISH_NODE_COL,
-//   distance: Infinity,
-//   isVisited: false,
-//   isWall: false,
-//   previousNode: null,
-// },{
-//   col,
-//   row,
-//   isStart: row === START_NODE_ROW && col === START_NODE_COL,
-//   isFinish: row === FINISH_NODE_ROW && col === FINISH_NODE_COL,
-//   distance: Infinity,
-//   isVisited: false,
-//   isWall: false,
-//   previousNode: null,
-// }]
-
-//  const {useAnimationHelper} = await import('@/stores/animations')
-//      const animationStore = useAnimationHelper()
 export async function dijkstra(grid:any, startNode:any, finishNode:any) {
     
      const visitedNodesInOrder = [];
@@ -49,7 +25,7 @@ export async function dijkstra(grid:any, startNode:any, finishNode:any) {
        closestNode.isVisited = true;
       // animation helper
       animationTimeHelper(closestNode,closestNode.status + ' visited')
-      //  closestNode.status =  closestNode.status + ' visited'
+     
        visitedNodesInOrder.push(closestNode);
        if (closestNode === finishNode) return visitedNodesInOrder;
        updateUnvisitedNeighbors(closestNode, grid);
@@ -78,7 +54,7 @@ export async function dijkstra(grid:any, startNode:any, finishNode:any) {
      return neighbors.filter(neighbor => !neighbor.isVisited); // return only the unVisited nodes(filter them in an array list)
    }
    
-   // soooo you need you nodes to be stored like sooo const nodes = [[1,2,3],[1,2,3]]
+   
    function getAllNodes(grid:any) {
      const nodes = [];
      for (const row of grid) {
@@ -91,14 +67,16 @@ export async function dijkstra(grid:any, startNode:any, finishNode:any) {
    
    // Backtracks from the finishNode to find the shortest path.
    // Only works when called *after* the dijkstra method above.
-   export function getNodesInShortestPathOrder(finishNode:any) {
-     const nodesInShortestPathOrder = [];
+   export function getNodesInShortestPathOrder(finishNode:NodeObjectType) {
+    //  const nodesInShortestPathOrder = [];
      let currentNode = finishNode;
      while (currentNode !== null) {
-       nodesInShortestPathOrder.unshift(currentNode);
+      //  nodesInShortestPathOrder.unshift(currentNode);
+      animationTimeHelper(currentNode,currentNode.status + ' short-path')
        currentNode = currentNode.previousNode;
+      
      }
-     return nodesInShortestPathOrder;
+    //  return nodesInShortestPathOrder;
    }
 
 

@@ -33,3 +33,7 @@ export const changeAnimationSpeed = (newSpeed:string)=>{
      speeds[newSpeed]()
 
 }
+
+export const resetAnimationPreviosTime = ()=>{
+    previosTimeoutTime = 0
+}

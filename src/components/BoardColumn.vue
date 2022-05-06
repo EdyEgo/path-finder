@@ -93,6 +93,13 @@ columnAspect.value = clickModeStatus.value
 
 <style scoped>
 
+
+.short-path{
+   background-color: rgb(179, 255, 0);
+      
+  animation-name: roundToSquare;
+  animation-duration: 0.5s;
+}
 .wall{
      background-color: black;
       

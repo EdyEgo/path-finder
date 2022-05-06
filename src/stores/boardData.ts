@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import {dijkstra,getNodesInShortestPathOrder} from '@/algorithms/dijkstra' 
+import {resetAnimationPreviosTime} from '@/services/animationHelpers'
 import type { NodeObjectType} from '@/types/algorithms'
 interface ColumnInfo{
     status:string
@@ -40,6 +41,7 @@ export const useBoardData = defineStore({
        
 
         grid:any//[] | { col: number, row: number, isStart: boolean, isFinish: boolean, distance: number, isVisited: boolean, isWall: boolean, previousNode: any }[]
+        boardHasPath:boolean
         START_NODE_ROW : number
          START_NODE_COL : number
          FINISH_NODE_ROW : number
@@ -58,6 +60,7 @@ export const useBoardData = defineStore({
 
         //
         grid:[],
+        boardHasPath:false,
         START_NODE_ROW: 10,
          START_NODE_COL: 15,
          FINISH_NODE_ROW: 10,
@@ -107,8 +110,14 @@ export const useBoardData = defineStore({
       }
       this.grid.push(currentRow);
     }
+   
+    this.changeBoardPathStatus(false)
     return this.grid;
   },
+
+ changeBoardPathStatus(newStatus:boolean){
+  this.boardHasPath  = newStatus
+ },
   
   createNode (col:number, row:number):any {
      
@@ -137,10 +146,7 @@ export const useBoardData = defineStore({
 
 
 
-// const START_NODE_ROW = 10;
-// const START_NODE_COL = 15;
-// const FINISH_NODE_ROW = 10;
-// const FINISH_NODE_COL = 35;
+
 
 const startNode = grid[this.START_NODE_ROW][this.START_NODE_COL];
 const finishNode = grid[this.FINISH_NODE_ROW][this.FINISH_NODE_COL];
@@ -167,7 +173,32 @@ const nodesInShortestPathOrder = getNodesInShortestPathOrder(finishNode);
     
   
   
-  },
+  }, 
+
+  
+  visualizeDjkstra(){
+
+
+    const grid = this.grid//this.getInitialGrid();
+   
+   
+   
+   
+   
+   
+   
+   const startNode = grid[this.START_NODE_ROW][this.START_NODE_COL];
+   const finishNode = grid[this.FINISH_NODE_ROW][this.FINISH_NODE_COL];
+    dijkstra(grid, startNode, finishNode);
+    getNodesInShortestPathOrder(finishNode);
+ 
+       
+     
+     
+     },
+  
+
+
 
 
     createInitialRowWithColumnInfo(rowIndex:string,columnIndex:string){
@@ -181,30 +212,7 @@ const nodesInShortestPathOrder = getNodesInShortestPathOrder(finishNode);
        
     },
     
-  //   changeColumnStatus(rowIndex:string,columnIndex:string,newStatus:string){ // old working
-  //     // if status is start or target or bomb , remove the old point with that status and make it clean/unvisited
-
-  //   if(newStatus === 'start' || newStatus === 'target' || newStatus === 'bomb' ){
-     
-  //      // change to unvisited the old interest point 
-  //       // this.columnsInfo[]
-
-  //       const uniqueOldStatusRowIndex = this[`${newStatus}Point`][0];
-  //       const uniqueOldStatusColumnIndex = this[`${newStatus}Point`][1];
-
-  //      if(uniqueOldStatusRowIndex && uniqueOldStatusColumnIndex){
-  //       // delete old unique node point
-  //       this.columnsInfo[uniqueOldStatusRowIndex][uniqueOldStatusColumnIndex].status = 'unvisited'
-  //      }
-  // // add the new indexes to the unique node point
-  //      this[`${newStatus}Point`] = [`${rowIndex}`,`${columnIndex}`]
-
-  //     // this[`${newStatus}Point`]  = new target or start or bomb point
-  //   }
-
-  //     this.columnsInfo[rowIndex][columnIndex].status = newStatus
-    
-  //   },
+ 
 
   helperNodeStatusChange(oldNodeObject:NodeObjectType,newGivenStatus:string){
      
@@ -217,19 +225,19 @@ const nodesInShortestPathOrder = getNodesInShortestPathOrder(finishNode);
          return {...oldNodeObject,isWall:false,isVisited:false,isFinish:true,isStart:false,status:newGivenStatus}
        },
        wall:()=>{
-        return {...oldNodeObject,isWall:true,isVisited:false,isFinish:false,isStart:false,status:newGivenStatus}
+        return {...oldNodeObject,isWall:true,isVisited:false,isFinish:false,previousNode:null,distance:Infinity,isStart:false,status:newGivenStatus}
        },
        bomb:()=>{
-        return {...oldNodeObject,isWall:false,isVisited:false,isFinish:false,isStart:false,isBomb:true,status:newGivenStatus}
+        return {...oldNodeObject,isWall:false,isVisited:false,isFinish:false,previousNode:null,distance:Infinity,isStart:false,isBomb:true,status:newGivenStatus}
        },
        weight:()=>{
-        return {...oldNodeObject,isWall:false,isVisited:false,isFinish:false,isStart:false,isBomb:false,isWeight:true,status:newGivenStatus}
+        return {...oldNodeObject,isWall:false,isVisited:false,isFinish:false,previousNode:null,distance:Infinity,isStart:false,isBomb:false,isWeight:true,status:newGivenStatus}
        },
        clearWeightAndWall:()=>{
          return {...oldNodeObject,isWall:false,isVisited:false,isFinish:false,isStart:false,isWeight:false,status:'unvisited'}
        },
        unvisited:()=>{
-        return {...oldNodeObject,isWall:false,isVisited:false,isFinish:false,isStart:false,isBomb:false,status:newGivenStatus}
+        return {...oldNodeObject,isVisited:false,previousNode:null,status:oldNodeObject.status +  newGivenStatus,distance:Infinity}
        },
        visited:()=>{
         return {...oldNodeObject,isWall:false,isVisited:true,isFinish:false,isStart:false,isBomb:false,status:newGivenStatus}
@@ -239,20 +247,48 @@ const nodesInShortestPathOrder = getNodesInShortestPathOrder(finishNode);
      return givenStatusList[newGivenStatus]()
 
   },
+  
+  //  resetAnimationPreviosTime()
+ 
+  activateAnAlghorithmFromList(selectedAlgorithm:string){
+    resetAnimationPreviosTime()
+
+    if(this.boardHasPath){
+      // clear path but not the walls added if an previous algorithm has already made a path 
+      this.clearPath()
+      
+
+}
+
+const algorithmsList:{[key:string]:()=>void} = {
+        Dijkstra:()=>{
+                this.visualizeDjkstra()
+        }
+}
+
+    algorithmsList[selectedAlgorithm]() 
+
+// after the algorithm has made a path change a status of the board on hasPath variable
+    this.changeBoardPathStatus(true)
+  },
 
   clearWallsAndWeights(){
-   const clearedNodes =   this.grid.map((row:any)=>{
-      return row.map((nodeObject:NodeObjectType)=>{
-         if(nodeObject.isWall || nodeObject.isWeight){
-          return this.helperNodeStatusChange(nodeObject,'clearWeightAndWall')
-         }
-         return nodeObject
-      })
-     })
-     this.grid = clearedNodes
+    resetAnimationPreviosTime()
+  //  const clearedNodes =   this.grid.map((row:any)=>{
+  //     return row.map((nodeObject:NodeObjectType)=>{
+  //        if(nodeObject.isWall || nodeObject.isWeight){
+  //         return this.helperNodeStatusChange(nodeObject,'clearWeightAndWall')
+  //        }
+  //        return nodeObject
+  //     })
+  //    })
+  //    this.grid = clearedNodes
+   this.getInitialGrid()
+
   },
 
   clearPath(){
+    resetAnimationPreviosTime()
     // makes all visited nodes , unvisited
     const clearedNodes =   this.grid.map((row:any)=>{
       return row.map((nodeObject:NodeObjectType)=>{
@@ -262,6 +298,7 @@ const nodesInShortestPathOrder = getNodesInShortestPathOrder(finishNode);
         return nodeObject
       })
      })
+     this.changeBoardPathStatus(false)
      this.grid = clearedNodes
       
   },

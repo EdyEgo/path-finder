@@ -75,6 +75,32 @@ onMounted(()=>{
 
 
 
+function activateAnAlghorithmFromList(){
+  
+  const selectedAlgorithm = optionsStore.$state.selectedAlgorithm
+  boardDataStore.activateAnAlghorithmFromList(selectedAlgorithm)
+ 
+//   // first clear the path if the path is dirty :))
+//   // boardDataStore.clearPath()
+//   if(boardDataStore.boardHasPath){
+//           // clear path but not the walls added if an previous algorithm has already made a path 
+//           boardDataStore.clearPath()
+          
+
+//   }
+
+//     const algorithmsList:{[key:string]:()=>void} = {
+//             Dijkstra:()=>{
+//                     boardDataStore.visualizeDjkstra()
+//             }
+//     }
+   
+//         algorithmsList[selectedAlgorithm]() 
+
+//  // after the algorithm has made a path change a status of the board on hasPath variable
+//     boardDataStore.changeBoardPathStatus(true)
+
+}
 
 
 function visualizeAlgorithm(){
@@ -82,6 +108,10 @@ function visualizeAlgorithm(){
         algorithmSelected.buttonText = 'Pick an algorithm '
                 return 
         }
+        // optionsStore.$state.selectedAlgorithm
+     activateAnAlghorithmFromList()
+
+
 }
 
 
