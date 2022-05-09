@@ -103,8 +103,8 @@ function handleMouseUp() {
           handleMouseDown())
     "
     @mouseup="
-      (  nodeIsDraggAble() &&
-          handleMouseUp())
+       
+          handleMouseUp()
     "
     @mouseenter="boardStore.$state.dragNodesEnabled && handleMouseEnter()"
   >
