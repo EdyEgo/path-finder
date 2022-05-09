@@ -201,6 +201,7 @@ export const useBoardData = defineStore({
        target:()=>{
          return {...oldNodeObject,isWall:false,isVisited:false,isFinish:true,isStart:false,status:newGivenStatus}
        },
+      
        wall:()=>{
         return {...oldNodeObject,isWall:true,isVisited:false,isFinish:false,previousNode:null,distance:Infinity,isStart:false,status:newGivenStatus}
        },

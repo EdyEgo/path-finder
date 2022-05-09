@@ -26,8 +26,8 @@ const columnAspect = ref<string>(
 );
 
 function nodeIsDraggAble(){
-  const isTargetOrStart = boardStore.$state.grid[props.indexRow][props.indexColumn].status.includes("target") ? true :
-    boardStore.$state.grid[props.indexRow][props.indexColumn].status.includes("start") ? true : false
+  const isTargetOrStart = boardStore.$state.grid[props.indexRow][props.indexColumn].isFinish ? true :
+    boardStore.$state.grid[props.indexRow][props.indexColumn].isStart ? true : false
 
     return boardStore.$state.dragNodesEnabled === true && isTargetOrStart
 }
@@ -67,16 +67,17 @@ function handleMouseEnter() {
     // if boardStore.$state.draggedNodeStatus , beggin the prosses of running the algorithm
     // we are in the future start/target node , 
     //so take the status of the dragged node and move it to this one , then clear path and start algorithm
-     const targetOrStart = boardStore.$state.draggedNodeStatus.status.includes('target') ? 'target' : 'start'
-     changeColumnStatus(targetOrStart)
+     const targetOrStart = boardStore.$state.draggedNodeStatus.isFinish ? 'target' : 'start'
+     
     
      boardStore.clearPath(true)
+     changeColumnStatus(targetOrStart)
      //
 
      const selectedAlgorithm = optionsStore.$state.selectedAlgorithm
   boardStore.activateAnAlghorithmFromList(selectedAlgorithm,true)
 
-    boardStore.$state.grid[props.indexRow][props.indexColumn]
+   
 
   }
 
@@ -108,7 +109,7 @@ function handleMouseUp() {
     <!-- <div class="start " :class="columnAspect === 'unvisited' ? '':'hidden'">
                   
                    </div> -->
-    <div class="relative start" :class="columnAspect.includes('start') ? '' : 'hidden'">
+    <div class="relative start" :class="boardStore.$state.grid[props.indexRow][props.indexColumn].isStart ? '' : 'hidden'">
       <svg class="absolute -top-2" width="1em" height="1em" viewBox="0 0 72 72">
         <path
           fill="#FCEA2B"
@@ -171,7 +172,7 @@ function handleMouseUp() {
         ></path>
       </svg>
     </div>
-    <div class="relative target" :class="columnAspect.includes('target') ? '' : 'hidden'">
+    <div class="relative target" :class="boardStore.$state.grid[props.indexRow][props.indexColumn].isFinish ? '' : 'hidden'">
       <svg class="absolute -top-2" width="1em" height="1em" viewBox="0 0 100 100">
         <path
           fill="currentColor"
@@ -186,7 +187,7 @@ function handleMouseUp() {
       </svg>
     </div>
 
-    <div class="relative bomb" :class="columnAspect === 'bomb' ? '' : 'hidden'">
+    <div class="relative bomb" :class="boardStore.$state.grid[props.indexRow][props.indexColumn].isBomb === 'bomb' ? '' : 'hidden'">
       <svg class="absolute -top-2" width="1em" height="1em" viewBox="0 0 512 512">
         <path
           fill="#D0C9BF"
@@ -211,7 +212,7 @@ function handleMouseUp() {
       </svg>
     </div>
 
-    <div class="relative weight" :class="columnAspect === 'weight' ? '' : 'hidden'">
+    <div class="relative weight" :class="boardStore.$state.grid[props.indexRow][props.indexColumn].isWeight === 'weight' ? '' : 'hidden'">
       <svg class="absolute -top-2" width="1.25em" height="1em" viewBox="0 0 640 512">
         <path
           fill="currentColor"
