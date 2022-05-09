@@ -58,7 +58,7 @@ function handleMouseDown() {
     boardStore.$state.grid[props.indexRow][props.indexColumn]
   );
 
-  console.log("drag up  ");
+  
 }
 function handleMouseEnter() {
   // here change the target and the start point and beggin the current algorithm , but without animation
@@ -74,21 +74,17 @@ function handleMouseEnter() {
      //
 
      const selectedAlgorithm = optionsStore.$state.selectedAlgorithm
-  boardStore.activateAnAlghorithmFromList(selectedAlgorithm)
+  boardStore.activateAnAlghorithmFromList(selectedAlgorithm,true)
 
     boardStore.$state.grid[props.indexRow][props.indexColumn]
 
   }
 
-  console.log(" hover with maybe drag up ");
+  
 }
 function handleMouseUp() {
   boardStore.changeNodeInDragStatus(null);
-  console.log(
-    "drag down ",
-    "ss",
-    boardStore.$state.grid[props.indexRow][props.indexColumn]
-  );
+  
 }
 </script>
 

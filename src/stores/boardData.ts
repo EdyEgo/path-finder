@@ -145,6 +145,7 @@ export const useBoardData = defineStore({
       isWall: false,
       previousNode: null,
       isBomb:false,
+      isPath:false,
       status: isStart ? 'start' : isFinish ? 'target' : 'unvisited'
     };
   },
@@ -152,7 +153,7 @@ export const useBoardData = defineStore({
  
 
   
-  visualizeDjkstra(){
+  visualizeDjkstra(noAnimation?:boolean){
 
 
     const grid = this.grid
@@ -165,8 +166,8 @@ export const useBoardData = defineStore({
    
    const startNode = grid[this.startPoint[0]][this.startPoint[1]];
    const finishNode = grid[this.targetPoint[0]][this.targetPoint[1]];
-   const animationTimeAlgorithm =  dijkstra(grid, startNode, finishNode);
-   const animationTimeShortesPath = getNodesInShortestPathOrder(finishNode);
+   const animationTimeAlgorithm =  dijkstra(grid, startNode, finishNode,noAnimation);
+   const animationTimeShortesPath = getNodesInShortestPathOrder(finishNode,noAnimation);
  
        return {animationTimeAlgorithm,animationTimeShortesPath}
      
@@ -213,11 +214,11 @@ export const useBoardData = defineStore({
          return {...oldNodeObject,isWall:false,isVisited:false,isFinish:false,isStart:false,isWeight:false,status:'unvisited'}
        },
        unvisited:()=>{
-        return {...oldNodeObject,isVisited:false,previousNode:null,status: oldNodeObject.status +  newGivenStatus,distance:Infinity}
+        return {...oldNodeObject,isVisited:false,previousNode:null,status: oldNodeObject.isPath ? oldNodeObject.status + newGivenStatus : newGivenStatus,distance:Infinity}
        },
        clearPath:()=>{
          //status:oldNodeObject.isVisited && !oldNodeObject.isStart && !oldNodeObject.isFinish ?   '' : oldNodeObject.status +  newGivenStatus
-         return {...oldNodeObject,isVisited:false,previousNode:null,status:oldNodeObject.isVisited && oldNodeObject.isStart === false && !oldNodeObject.isFinish ===false ?   '' : oldNodeObject.status +  'unvisited',distance:Infinity}
+         return {...oldNodeObject,isVisited:false,previousNode:null,status:oldNodeObject.isVisited && oldNodeObject.isStart === false && oldNodeObject.isFinish ===false ?   '' :   'unvisited',distance:Infinity}
        },
        
        visited:()=>{
@@ -241,7 +242,7 @@ export const useBoardData = defineStore({
   
   //  resetAnimationPreviosTime()
  
-  activateAnAlghorithmFromList(selectedAlgorithm:string){
+  activateAnAlghorithmFromList(selectedAlgorithm:string,noAnimation?:boolean){
     resetAnimationPreviosTime()
 
     if(this.boardHasPath){
@@ -253,7 +254,7 @@ export const useBoardData = defineStore({
 
 const algorithmsList:{[key:string]:()=>{animationTimeAlgorithm:number,animationTimeShortesPath:number}} = {
         Dijkstra:()=>{
-               return this.visualizeDjkstra()
+               return this.visualizeDjkstra(noAnimation)
         }
 }
   
@@ -264,6 +265,13 @@ const algorithmsList:{[key:string]:()=>{animationTimeAlgorithm:number,animationT
 
   // set action buttons to active after the animation finishes 
 
+  if(noAnimation){
+    
+    this.disableActionButtons = false
+    this.dragNodesEnabled = true
+    this.changeBoardPathStatus(true)
+    return 
+  }
   setTimeout(()=>{
     this.disableActionButtons = false
     this.dragNodesEnabled = true

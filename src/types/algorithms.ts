@@ -9,4 +9,5 @@ export interface NodeObjectType{
     isBomb:boolean
     isWeight:boolean
     status:string
+    isPath:boolean
  }

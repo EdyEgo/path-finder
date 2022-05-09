@@ -8,13 +8,13 @@ import type { NodeObjectType} from '@/types/algorithms'
 import {animationTimeHelper} from '@/services/animationHelpers'
 
 
-export  function dijkstra(grid:any, startNode:any, finishNode:any) {
+export  function dijkstra(grid:any, startNode:any, finishNode:any,noAnimation:boolean | undefined) {
     
      const visitedNodesInOrder = [];
      startNode.distance = 0;
      const unvisitedNodes = getAllNodes(grid);
      let lastNodeAnimationTime = 0
-     console.log('unvizited nodes',unvisitedNodes)
+   
      while (!!unvisitedNodes.length) {
        sortNodesByDistance(unvisitedNodes);
        const closestNode = unvisitedNodes.shift();
@@ -26,7 +26,9 @@ export  function dijkstra(grid:any, startNode:any, finishNode:any) {
        closestNode.isVisited = true;
   
       // animation helper
-      lastNodeAnimationTime = animationTimeHelper(closestNode,closestNode.status + ' visited')
+      
+      
+      animationTimeHelper(closestNode, closestNode.status + ' visited ',noAnimation)
      
        visitedNodesInOrder.push(closestNode);
        if (closestNode === finishNode) return lastNodeAnimationTime //visitedNodesInOrder;
@@ -70,13 +72,15 @@ export  function dijkstra(grid:any, startNode:any, finishNode:any) {
    
    // Backtracks from the finishNode to find the shortest path.
    // Only works when called *after* the dijkstra method above.
-   export function getNodesInShortestPathOrder(finishNode:NodeObjectType) {
+   export function getNodesInShortestPathOrder(finishNode:NodeObjectType,noAnimation:boolean | undefined) {
     //  const nodesInShortestPathOrder = [];
      let currentNode = finishNode;
      let lastNodeAnimationTime = 0
      while (currentNode !== null) {
       //  nodesInShortestPathOrder.unshift(currentNode);
-      lastNodeAnimationTime =  animationTimeHelper(currentNode,currentNode.status + ' short-path ')
+      
+      lastNodeAnimationTime =  animationTimeHelper(currentNode,currentNode.status + ' short-path ',noAnimation)
+      currentNode.isPath = false
        currentNode = currentNode.previousNode;
       
      }

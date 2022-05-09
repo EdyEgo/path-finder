@@ -3,16 +3,21 @@ import type {NodeObjectType} from '@/types/algorithms'
 let previosTimeoutTime = 0
 let waitTimeTillNextAnimation = 5//20
 
-export const animationTimeHelper = (node:NodeObjectType,newStatus:string)=>{ // returns the time that the last node is gonna be animated
+export const animationTimeHelper = (node:NodeObjectType,newStatus:string,noAnimation:boolean | undefined)=>{ // returns the time that the last node is gonna be animated
      // callback is used for example to make the action buttons active again
    
+    if(noAnimation === undefined){
+      setTimeout(()=>{
+         node.status = newStatus
+     
+     },previosTimeoutTime + waitTimeTillNextAnimation)
+     previosTimeoutTime +=  waitTimeTillNextAnimation
 
-    setTimeout(()=>{
-        node.status = newStatus
-    
-    },previosTimeoutTime + waitTimeTillNextAnimation)
+     return previosTimeoutTime
+    } 
+  
 
-    previosTimeoutTime +=  waitTimeTillNextAnimation
+    node.status = newStatus
     return previosTimeoutTime
 }
 
