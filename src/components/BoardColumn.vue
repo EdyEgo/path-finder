@@ -38,10 +38,16 @@ watchEffect(() => {
   columnAspect.value = boardStore.$state.grid[props.indexRow][props.indexColumn].status;
 });
 
-function changeColumnStatus() {
+function changeColumnStatus(customStatus?:string) {
   // here we gonna look at the options too see what modude is selected(ex wall , blackHole/bomb)
   // and on click or on hover or on click keept pressed change the column object and add that style to
   // the columnAspect
+  if(customStatus){
+
+    boardStore.changeColumnStatus(props.indexRow, props.indexColumn, customStatus);
+    columnAspect.value = customStatus;
+    return 
+  }
   boardStore.changeColumnStatus(props.indexRow, props.indexColumn, clickModeStatus.value);
 
   columnAspect.value = clickModeStatus.value;
@@ -57,8 +63,21 @@ function handleMouseDown() {
 function handleMouseEnter() {
   // here change the target and the start point and beggin the current algorithm , but without animation
 
-  if (boardStore.$state.draggedNodeStatus) {
+  if (boardStore.$state.draggedNodeStatus !== null) {
     // if boardStore.$state.draggedNodeStatus , beggin the prosses of running the algorithm
+    // we are in the future start/target node , 
+    //so take the status of the dragged node and move it to this one , then clear path and start algorithm
+     const targetOrStart = boardStore.$state.draggedNodeStatus.status.includes('target') ? 'target' : 'start'
+     changeColumnStatus(targetOrStart)
+    
+     boardStore.clearPath(true)
+     //
+
+     const selectedAlgorithm = optionsStore.$state.selectedAlgorithm
+  boardStore.activateAnAlghorithmFromList(selectedAlgorithm)
+
+    boardStore.$state.grid[props.indexRow][props.indexColumn]
+
   }
 
   console.log(" hover with maybe drag up ");
