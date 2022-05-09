@@ -28,7 +28,7 @@ export  function dijkstra(grid:any, startNode:any, finishNode:any,noAnimation:bo
       // animation helper
       
       
-      animationTimeHelper(closestNode,  ' visited ',noAnimation)
+      animationTimeHelper(closestNode,  'visited',noAnimation)
      
        visitedNodesInOrder.push(closestNode);
        if (closestNode === finishNode) return lastNodeAnimationTime //visitedNodesInOrder;

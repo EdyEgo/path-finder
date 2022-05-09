@@ -32,11 +32,11 @@ function nodeIsDraggAble(){
     return boardStore.$state.dragNodesEnabled === true && isTargetOrStart
 }
 
-watchEffect(() => {
-  boardStore.$state.grid[props.indexRow][props.indexColumn].status; // watch the status
+// watchEffect(() => {
+//   boardStore.$state.grid[props.indexRow][props.indexColumn].status; // watch the status
 
-  columnAspect.value = boardStore.$state.grid[props.indexRow][props.indexColumn].status;
-});
+//   columnAspect.value = boardStore.$state.grid[props.indexRow][props.indexColumn].status;
+// });
 
 function changeColumnStatus(customStatus?:string) {
   // here we gonna look at the options too see what modude is selected(ex wall , blackHole/bomb)
@@ -45,12 +45,12 @@ function changeColumnStatus(customStatus?:string) {
   if(customStatus){
 
     boardStore.changeColumnStatus(props.indexRow, props.indexColumn, customStatus);
-    columnAspect.value = customStatus;
+    // columnAspect.value = customStatus;
     return 
   }
   boardStore.changeColumnStatus(props.indexRow, props.indexColumn, clickModeStatus.value);
 
-  columnAspect.value = clickModeStatus.value;
+  // columnAspect.value = clickModeStatus.value;
 }
 
 function handleMouseDown() {
@@ -87,13 +87,14 @@ function handleMouseUp() {
   boardStore.changeNodeInDragStatus(null);
   
 }
+// dragNodesEnabled
 </script>
 
 <template>
   <!-- @mouseenter="changeColumnAspect" -->
   <td
     class=""
-    :class="[columnAspect, columnIndex]"
+    :class="[boardStore.$state.dragNodesEnabled ? boardStore.$state.grid[props.indexRow][props.indexColumn].status +'-no-animation': boardStore.$state.grid[props.indexRow][props.indexColumn].status, columnIndex]"
     @click="boardStore.$state.dragNodesEnabled === false && changeColumnStatus()"
     @mousedown="
       (  nodeIsDraggAble() &&
@@ -106,9 +107,7 @@ function handleMouseUp() {
     @mouseenter="boardStore.$state.dragNodesEnabled && handleMouseEnter()"
   >
     
-    <!-- <div class="start " :class="columnAspect === 'unvisited' ? '':'hidden'">
-                  
-                   </div> -->
+   
     <div class="relative start" :class="boardStore.$state.grid[props.indexRow][props.indexColumn].isStart ? '' : 'hidden'">
       <svg class="absolute -top-2" width="1em" height="1em" viewBox="0 0 72 72">
         <path
@@ -253,7 +252,7 @@ function handleMouseUp() {
   animation-play-state: running;
 }
 .visited-no-animation {
-  background-color: rgb(7, 189, 234);
+  background-color: rgba(0, 217, 159, 0.75);
 }
 
 .column-element {

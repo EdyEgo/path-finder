@@ -1,7 +1,7 @@
 import type {NodeObjectType} from '@/types/algorithms'
 
 let previosTimeoutTime = 0
-let waitTimeTillNextAnimation = 5//20
+let waitTimeTillNextAnimation = 20
 
 export const animationTimeHelper = (node:NodeObjectType,newStatus:string,noAnimation:boolean | undefined)=>{ // returns the time that the last node is gonna be animated
      // callback is used for example to make the action buttons active again

@@ -28,7 +28,7 @@ export const useBoardData = defineStore({
       {
         rowsNumber : number
         columnsNumber : number
-       
+        
         columnsInfo:{[key:string]:{[key:string]:ColumnInfo}} 
         createdRows:number
         createColumns:number
@@ -41,6 +41,7 @@ export const useBoardData = defineStore({
         dragNodesEnabled:boolean
         draggedNodeStatus:NodeObjectType | null
         disableActionButtons:boolean
+        
         grid:any//[] | { col: number, row: number, isStart: boolean, isFinish: boolean, distance: number, isVisited: boolean, isWall: boolean, previousNode: any }[]
         boardHasPath:boolean
         START_NODE_ROW : number
@@ -64,6 +65,7 @@ export const useBoardData = defineStore({
         draggedNodeStatus:null,
         //
         disableActionButtons:false,
+        
         grid:[],
         boardHasPath:false,
         START_NODE_ROW: 10,
