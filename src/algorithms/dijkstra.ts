@@ -78,8 +78,9 @@ export  function dijkstra(grid:any, startNode:any, finishNode:any,noAnimation:bo
      let lastNodeAnimationTime = 0
      while (currentNode !== null) {
       //  nodesInShortestPathOrder.unshift(currentNode);
+      const statusIsStartOrTarget = currentNode.status.includes('start') || currentNode.status.includes('target') ? currentNode.status + ' short-path ' : 'short-path'
       
-      lastNodeAnimationTime =  animationTimeHelper(currentNode,currentNode.status + ' short-path ',noAnimation)
+      lastNodeAnimationTime =  animationTimeHelper(currentNode,statusIsStartOrTarget,noAnimation)
       currentNode.isPath = false
        currentNode = currentNode.previousNode;
       
