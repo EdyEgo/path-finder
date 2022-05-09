@@ -15,7 +15,7 @@ const boardDataStore = useBoardData()
 //  const animationStore = useAnimationHelper()
 
 
-const actionButtonsActiveStatus = ref(boardDataStore.$state.actionButtonsActiveStatus)
+
 
 
 const algorithmSelected =reactive({

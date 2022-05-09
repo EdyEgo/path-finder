@@ -24,6 +24,7 @@ export  function dijkstra(grid:any, startNode:any, finishNode:any) {
        // we must be trapped and should therefore stop.
        if (closestNode.distance === Infinity) return lastNodeAnimationTime //visitedNodesInOrder;
        closestNode.isVisited = true;
+  
       // animation helper
       lastNodeAnimationTime = animationTimeHelper(closestNode,closestNode.status + ' visited')
      
@@ -75,7 +76,7 @@ export  function dijkstra(grid:any, startNode:any, finishNode:any) {
      let lastNodeAnimationTime = 0
      while (currentNode !== null) {
       //  nodesInShortestPathOrder.unshift(currentNode);
-      lastNodeAnimationTime =  animationTimeHelper(currentNode,currentNode.status + ' short-path')
+      lastNodeAnimationTime =  animationTimeHelper(currentNode,currentNode.status + ' short-path ')
        currentNode = currentNode.previousNode;
       
      }

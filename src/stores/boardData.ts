@@ -33,12 +33,13 @@ export const useBoardData = defineStore({
         createdRows:number
         createColumns:number
         // status can be : wall , pathSearched , pathTraveled , bomb/blackHole
-        startPoint:[number,number] | []//['1','7']  row number , column number          {[key:string]:string}  // rowstring:columnstring 
-        targetPoint:[number,number] | []
+        startPoint:[number,number] //['1','7']  row number , column number          {[key:string]:string}  // rowstring:columnstring 
+        targetPoint:[number,number] 
         weightPoint:[number,number] | []
         bombPoint:[number,number] | []
-     
        
+        dragNodesEnabled:boolean
+        draggedNodeStatus:NodeObjectType | null
         disableActionButtons:boolean
         grid:any//[] | { col: number, row: number, isStart: boolean, isFinish: boolean, distance: number, isVisited: boolean, isWall: boolean, previousNode: any }[]
         boardHasPath:boolean
@@ -53,11 +54,14 @@ export const useBoardData = defineStore({
         createdRows:0,
         createColumns: 0,
         columnsInfo:{},
-        startPoint:[],
-        targetPoint:[],
+        startPoint:[10,15],
+        targetPoint:[12,35],
         weightPoint:[],
         bombPoint:[],
-
+        
+        
+        dragNodesEnabled:false,
+        draggedNodeStatus:null,
         //
         disableActionButtons:false,
         grid:[],
@@ -74,6 +78,11 @@ export const useBoardData = defineStore({
   getters: {},
 
   actions: {
+   
+    changeNodeInDragStatus(node:NodeObjectType | null){
+      this.draggedNodeStatus= node
+    },
+
   //  getInitialGrid  () {
   //     const grid = [];
   //     for (let row = 0; row < 20; row++) {
@@ -121,9 +130,11 @@ export const useBoardData = defineStore({
  },
   
   createNode (col:number, row:number):any {
+    
      
-   const isStart =  row === this.START_NODE_ROW && col === this.START_NODE_COL;
-   const isFinish = row === this.FINISH_NODE_ROW && col === this.FINISH_NODE_COL;
+   const isStart =  row === this.startPoint[0] && col === this.startPoint[1];
+   const isFinish = row === this.targetPoint[0] && col === this.targetPoint[1];
+  
     return {
       col,
       row,
@@ -144,16 +155,16 @@ export const useBoardData = defineStore({
   visualizeDjkstra(){
 
 
-    const grid = this.grid//this.getInitialGrid();
+    const grid = this.grid
    
    
    
    
    
+  
    
-   
-   const startNode = grid[this.START_NODE_ROW][this.START_NODE_COL];
-   const finishNode = grid[this.FINISH_NODE_ROW][this.FINISH_NODE_COL];
+   const startNode = grid[this.startPoint[0]][this.startPoint[1]];
+   const finishNode = grid[this.targetPoint[0]][this.targetPoint[1]];
    const animationTimeAlgorithm =  dijkstra(grid, startNode, finishNode);
    const animationTimeShortesPath = getNodesInShortestPathOrder(finishNode);
  
@@ -202,19 +213,24 @@ export const useBoardData = defineStore({
          return {...oldNodeObject,isWall:false,isVisited:false,isFinish:false,isStart:false,isWeight:false,status:'unvisited'}
        },
        unvisited:()=>{
-        return {...oldNodeObject,isVisited:false,previousNode:null,status:oldNodeObject.status +  newGivenStatus,distance:Infinity}
+        return {...oldNodeObject,isVisited:false,previousNode:null,status: oldNodeObject.status +  newGivenStatus,distance:Infinity}
        },
+       clearPath:()=>{
+         //status:oldNodeObject.isVisited && !oldNodeObject.isStart && !oldNodeObject.isFinish ?   '' : oldNodeObject.status +  newGivenStatus
+         return {...oldNodeObject,isVisited:false,previousNode:null,status:oldNodeObject.isVisited && oldNodeObject.isStart === false && !oldNodeObject.isFinish ===false ?   '' : oldNodeObject.status +  'unvisited',distance:Infinity}
+       },
+       
        visited:()=>{
         return {...oldNodeObject,isWall:false,isVisited:true,isFinish:false,isStart:false,isBomb:false,status:newGivenStatus}
       },
       un_start:()=>{
-       return {...oldNodeObject,isStart:false,status:newGivenStatus}
+       return {...oldNodeObject,isStart:false,status:'unvisited'}
       },
       un_target:()=>{
-        return {...oldNodeObject,isFinish:false,status:newGivenStatus}
+        return {...oldNodeObject,isFinish:false,status:'unvisited'}
       },
       un_bomb:()=>{
-        return {...oldNodeObject,isBomb:false,status:newGivenStatus}
+        return {...oldNodeObject,isBomb:false,status:'unvisited'}
       },
       
      }
@@ -243,12 +259,14 @@ const algorithmsList:{[key:string]:()=>{animationTimeAlgorithm:number,animationT
   
 // make buttons inactive 
   this.disableActionButtons = true
+  this.dragNodesEnabled = false
   const {animationTimeAlgorithm,animationTimeShortesPath} =   algorithmsList[selectedAlgorithm]() 
 
   // set action buttons to active after the animation finishes 
 
   setTimeout(()=>{
     this.disableActionButtons = false
+    this.dragNodesEnabled = true
     // you can press the action buttons now
   }, animationTimeShortesPath)
 
@@ -258,6 +276,7 @@ const algorithmsList:{[key:string]:()=>{animationTimeAlgorithm:number,animationT
   },
 
   clearWallsAndWeights(){
+    this.dragNodesEnabled = false
     resetAnimationPreviosTime()
   //  const clearedNodes =   this.grid.map((row:any)=>{
   //     return row.map((nodeObject:NodeObjectType)=>{
@@ -268,11 +287,14 @@ const algorithmsList:{[key:string]:()=>{animationTimeAlgorithm:number,animationT
   //     })
   //    })
   //    this.grid = clearedNodes
+  
    this.getInitialGrid()
 
   },
 
-  clearPath(){
+  clearPath(keepDragEnabled?:boolean){
+    if(!keepDragEnabled)  this.dragNodesEnabled = false
+   
     resetAnimationPreviosTime()
     // makes all visited nodes , unvisited
     const clearedNodes =   this.grid.map((row:any)=>{
