@@ -39,7 +39,7 @@ export const useBoardData = defineStore({
         bombPoint:[number,number] | []
      
        
-
+        disableActionButtons:boolean
         grid:any//[] | { col: number, row: number, isStart: boolean, isFinish: boolean, distance: number, isVisited: boolean, isWall: boolean, previousNode: any }[]
         boardHasPath:boolean
         START_NODE_ROW : number
@@ -59,6 +59,7 @@ export const useBoardData = defineStore({
         bombPoint:[],
 
         //
+        disableActionButtons:false,
         grid:[],
         boardHasPath:false,
         START_NODE_ROW: 10,
@@ -153,10 +154,10 @@ export const useBoardData = defineStore({
    
    const startNode = grid[this.START_NODE_ROW][this.START_NODE_COL];
    const finishNode = grid[this.FINISH_NODE_ROW][this.FINISH_NODE_COL];
-    dijkstra(grid, startNode, finishNode);
-    getNodesInShortestPathOrder(finishNode);
+   const animationTimeAlgorithm =  dijkstra(grid, startNode, finishNode);
+   const animationTimeShortesPath = getNodesInShortestPathOrder(finishNode);
  
-       
+       return {animationTimeAlgorithm,animationTimeShortesPath}
      
      
      },
@@ -230,20 +231,30 @@ export const useBoardData = defineStore({
     if(this.boardHasPath){
       // clear path but not the walls added if an previous algorithm has already made a path 
       this.clearPath()
-      
+      this.boardHasPath = false
 
 }
 
-const algorithmsList:{[key:string]:()=>void} = {
+const algorithmsList:{[key:string]:()=>{animationTimeAlgorithm:number,animationTimeShortesPath:number}} = {
         Dijkstra:()=>{
-                this.visualizeDjkstra()
+               return this.visualizeDjkstra()
         }
 }
+  
+// make buttons inactive 
+  this.disableActionButtons = true
+  const {animationTimeAlgorithm,animationTimeShortesPath} =   algorithmsList[selectedAlgorithm]() 
 
-    algorithmsList[selectedAlgorithm]() 
+  // set action buttons to active after the animation finishes 
+
+  setTimeout(()=>{
+    this.disableActionButtons = false
+    // you can press the action buttons now
+  }, animationTimeShortesPath)
 
 // after the algorithm has made a path change a status of the board on hasPath variable
     this.changeBoardPathStatus(true)
+    
   },
 
   clearWallsAndWeights(){

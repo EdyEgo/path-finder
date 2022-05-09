@@ -23,7 +23,7 @@ export const useAnimationHelper = defineStore({
 
   actions: {
       animateNodeChange(node:NodeObjectType,newStatus:string){
-        console.log('dude')
+       
         animationTimeHelper(node,newStatus,this.previosTimeoutTime,this.waitTimeTillNextAnimation)
         this.previosTimeoutTime +=  this.waitTimeTillNextAnimation // change the next wait time
       }

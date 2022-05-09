@@ -8,11 +8,12 @@ import type { NodeObjectType} from '@/types/algorithms'
 import {animationTimeHelper} from '@/services/animationHelpers'
 
 
-export async function dijkstra(grid:any, startNode:any, finishNode:any) {
+export  function dijkstra(grid:any, startNode:any, finishNode:any) {
     
      const visitedNodesInOrder = [];
      startNode.distance = 0;
      const unvisitedNodes = getAllNodes(grid);
+     let lastNodeAnimationTime = 0
      console.log('unvizited nodes',unvisitedNodes)
      while (!!unvisitedNodes.length) {
        sortNodesByDistance(unvisitedNodes);
@@ -21,15 +22,16 @@ export async function dijkstra(grid:any, startNode:any, finishNode:any) {
        if (closestNode.isWall) continue;
        // If the closest node is at a distance of infinity,
        // we must be trapped and should therefore stop.
-       if (closestNode.distance === Infinity) return visitedNodesInOrder;
+       if (closestNode.distance === Infinity) return lastNodeAnimationTime //visitedNodesInOrder;
        closestNode.isVisited = true;
       // animation helper
-      animationTimeHelper(closestNode,closestNode.status + ' visited')
+      lastNodeAnimationTime = animationTimeHelper(closestNode,closestNode.status + ' visited')
      
        visitedNodesInOrder.push(closestNode);
-       if (closestNode === finishNode) return visitedNodesInOrder;
+       if (closestNode === finishNode) return lastNodeAnimationTime //visitedNodesInOrder;
        updateUnvisitedNeighbors(closestNode, grid);
      }
+     return lastNodeAnimationTime
    }
    
    function sortNodesByDistance(unvisitedNodes:any) {
@@ -70,12 +72,14 @@ export async function dijkstra(grid:any, startNode:any, finishNode:any) {
    export function getNodesInShortestPathOrder(finishNode:NodeObjectType) {
     //  const nodesInShortestPathOrder = [];
      let currentNode = finishNode;
+     let lastNodeAnimationTime = 0
      while (currentNode !== null) {
       //  nodesInShortestPathOrder.unshift(currentNode);
-      animationTimeHelper(currentNode,currentNode.status + ' short-path')
+      lastNodeAnimationTime =  animationTimeHelper(currentNode,currentNode.status + ' short-path')
        currentNode = currentNode.previousNode;
       
      }
+     return lastNodeAnimationTime
     //  return nodesInShortestPathOrder;
    }
 

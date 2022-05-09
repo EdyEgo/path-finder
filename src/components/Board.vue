@@ -15,7 +15,7 @@ const boardDataStore = useBoardData()
 //  const animationStore = useAnimationHelper()
 
 
-
+const actionButtonsActiveStatus = ref(boardDataStore.$state.actionButtonsActiveStatus)
 
 
 const algorithmSelected =reactive({
@@ -186,18 +186,18 @@ Node types:
 <div class="p-2 text-center title-container">General Commands</div>
 <div class="flex justify-center gap-2 general-commands-container text-md">
 
-<div class="p-2 transition-all border rounded-sm cursor-pointer hover:bg-gray-200 ease" @click="createFreshBoard">
+<button :disabled="boardDataStore.$state.disableActionButtons" :class="boardDataStore.$state.disableActionButtons ? 'hover:bg-red-700 hover:text-white' : ''" class="p-2 transition-all border rounded-sm cursor-pointer hover:bg-gray-200 ease" @click="createFreshBoard">
  Clear Board
-</div>
-<div class="p-2 transition-all border rounded-sm cursor-pointer 0 hover:bg-gray-200 ease" @click="clearWallAndWeights">
+</button>
+<button :disabled="boardDataStore.$state.disableActionButtons" :class="boardDataStore.$state.disableActionButtons ? 'hover:bg-red-700 hover:text-white' : ''" class="p-2 transition-all border rounded-sm cursor-pointer 0 hover:bg-gray-200 ease" @click="clearWallAndWeights">
  Clear Walls & Weights
-</div>
-<div class="p-2 transition-all border rounded-sm cursor-pointer hover:bg-gray-200 ease" @click="clearPath">
+</button>
+<button :disabled="boardDataStore.$state.disableActionButtons" :class="boardDataStore.$state.disableActionButtons ? 'hover:bg-red-700 hover:text-white' : ''" class="p-2 transition-all border rounded-sm cursor-pointer hover:bg-gray-200 ease" @click="clearPath">
 Clear Path
-</div>
-<div @click="visualizeAlgorithm" :class="algorithmSelected.disabled ? 'hover:bg-red-700': 'hover:bg-blue-700'" class="p-2 text-white transition-all bg-blue-600 border rounded-sm cursor-pointer ease">
+</button>
+<button :disabled="boardDataStore.$state.disableActionButtons" :class="boardDataStore.$state.disableActionButtons || algorithmSelected.disabled ? 'hover:bg-red-700 hover:text-white' : 'hover:bg-blue-700'" @click="visualizeAlgorithm"  class="p-2 text-white transition-all bg-blue-600 border rounded-sm cursor-pointer ease">
 {{algorithmSelected.buttonText}}
-</div>
+</button>
 </div>
 
 
