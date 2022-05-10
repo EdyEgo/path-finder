@@ -5,6 +5,7 @@ import type { NodeObjectType} from '@/types/algorithms'
 interface ColumnInfo{
     status:string
 }
+// for mazez let's just add the option to add your own custom mazes , and save them(in local storage ofc.)
 
 // interface NodeObjectType{
 //    col: number,
