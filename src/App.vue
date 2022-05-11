@@ -105,8 +105,8 @@ function addCreateAdjacencyList(){
    routesLearning.value.forEach(edge=> addEdgeLearning(...edge))
 
 }
-addCreateAdjacencyList() // list created 
-console.log('adjacency list test',adjacencyListLeaning)
+// addCreateAdjacencyList() // list created 
+// console.log('adjacency list test',adjacencyListLeaning)
 
 
 function breathFirstSearch(start){

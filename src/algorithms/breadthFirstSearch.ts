@@ -3,29 +3,43 @@ import type {NodeObjectType} from '../types/algorithms'
 import {animationTimeHelper} from '@/services/animationHelpers'
 
 export function breadthFirstSearch(grid:any, startNode:NodeObjectType, finishNode:NodeObjectType,noAnimation:boolean | undefined){
-   //   const  unvisitedNodes = getAllNodes(grid)
+     const  unvisitedNodes = getAllNodes(grid)
      startNode.isVisited = true
-     const queue = [startNode] 
+     let queue = [startNode] 
      let lastNodeAnimationTime = 0
-
+     finishNode.isVisited = true
+    let test = 1
      const traversalOrder = [] // vizited
     //  queue.push(startNode)
+    setTimeout(()=>{
+      queue = []
+   },5000)
 
      while(queue.length >= 1){
          const removedQueueFirstNode = queue.shift()
          if(removedQueueFirstNode.isWall) continue
+         console.log('idk man',queue,'remove damn it',removedQueueFirstNode)
+         test += 1
 
-         if(!removedQueueFirstNode) return 'idk'
+         if(test >= 5000) break
+
+         if(removedQueueFirstNode === undefined) return lastNodeAnimationTime
+
+         
            removedQueueFirstNode.isVisited = true
            traversalOrder.push(removedQueueFirstNode)
            animationTimeHelper(removedQueueFirstNode,  'visited',noAnimation)
-       
+         
 
-        if(finishNode === removedQueueFirstNode) return 'here will be the animation time god damn it'
+
+        if(finishNode === removedQueueFirstNode) return lastNodeAnimationTime
         const unvisitedNeighbors = updateUnvisitedNeighbors(removedQueueFirstNode,grid)
+        console.log('is this always full ??',unvisitedNeighbors)
+        if(unvisitedNeighbors.length === 0) return
         for(const childNode of unvisitedNeighbors){
             queue.push(childNode)
         }
+       
 
      }
 }

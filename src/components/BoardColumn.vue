@@ -69,7 +69,7 @@ function handleMouseEnter() {
     //so take the status of the dragged node and move it to this one , then clear path and start algorithm
      const targetOrStart = boardStore.$state.draggedNodeStatus.isFinish ? 'target' : 'start'
      
-    
+    console.log('enter')
      boardStore.clearPath(true)
      changeColumnStatus(targetOrStart)
      //
