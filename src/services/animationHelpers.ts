@@ -30,7 +30,7 @@ export const changeAnimationSpeed = (newSpeed:string)=>{
             waitTimeTillNextAnimation = 50
          },
          slow:()=>{
-            waitTimeTillNextAnimation = 100
+            waitTimeTillNextAnimation = 800
          },
          superSlow:()=>{
             waitTimeTillNextAnimation = 200

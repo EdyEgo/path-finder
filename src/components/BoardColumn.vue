@@ -231,6 +231,9 @@ function handleMouseUp() {
 .short-path-no-animation {
   background-color: rgb(179, 255, 0);
 }
+.queue{
+  background-color: blueviolet;
+}
 .wall {
   background-color: black;
 

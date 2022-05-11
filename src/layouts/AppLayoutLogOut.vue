@@ -62,14 +62,14 @@ watchEffect(()=>{
 <template>
   <v-app>
     <v-app-bar color="grey-lighten-2">
-      <span class="flex-1 ml-4 text-2xl logo">Sythwave Path Finder</span>
+      <span class="flex-1 ml-4 text-2xl logo">Path Finder</span>
       <div class="primary-actions-btn">
-       <v-btn color="" type="button" class="mr-4">
+       <!-- <v-btn color="" type="button" class="mr-4">
         Play
       </v-btn>
        <v-btn color="" type="button" @click="signUserOut" class="mr-4">
        RESET 
-      </v-btn>
+      </v-btn> -->
       </div>
     </v-app-bar>
     <v-navigation-drawer
@@ -132,7 +132,7 @@ watchEffect(()=>{
         </v-select>
 
  <!-- Mazes & Patterns -->
-         <v-select class="overflow-hidden" v-show="!rail"
+         <!-- <v-select class="overflow-hidden" v-show="!rail"
        
           :items="mazesAndPatterns.items"
           filled
@@ -140,11 +140,11 @@ watchEffect(()=>{
           :label="mazesAndPatterns.label"
         >
          
-        </v-select>
+        </v-select> -->
       
     
          <!-- viewSpeed -->
-           <v-select class="overflow-hidden" v-show="!rail"
+           <!-- <v-select class="overflow-hidden" v-show="!rail"
        
           :items="viewSpeed.items"
           filled
@@ -152,7 +152,7 @@ watchEffect(()=>{
           :label="viewSpeed.label"
         >
          
-        </v-select>
+        </v-select> -->
   
 
 

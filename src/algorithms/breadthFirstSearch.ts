@@ -11,34 +11,34 @@ export function breadthFirstSearch(grid:any, startNode:NodeObjectType, finishNod
     let test = 1
      const traversalOrder = [] // vizited
     //  queue.push(startNode)
-    setTimeout(()=>{
-      queue = []
-   },5000)
+   
 
-     while(queue.length >= 1){
+     while(queue.length >= 1 && unvisitedNodes.length >= 1){
          const removedQueueFirstNode = queue.shift()
          if(removedQueueFirstNode.isWall) continue
          console.log('idk man',queue,'remove damn it',removedQueueFirstNode)
          test += 1
 
-         if(test >= 5000) break
+         if(test >= 2000) break
 
          if(removedQueueFirstNode === undefined) return lastNodeAnimationTime
 
          
            removedQueueFirstNode.isVisited = true
            traversalOrder.push(removedQueueFirstNode)
-           animationTimeHelper(removedQueueFirstNode,  'visited',noAnimation)
+           animationTimeHelper(removedQueueFirstNode,  'visited',undefined)
          
 
 
         if(finishNode === removedQueueFirstNode) return lastNodeAnimationTime
         const unvisitedNeighbors = updateUnvisitedNeighbors(removedQueueFirstNode,grid)
-        console.log('is this always full ??',unvisitedNeighbors)
+        queue = [...queue,...unvisitedNeighbors]
+    
+        
         if(unvisitedNeighbors.length === 0) return
-        for(const childNode of unvisitedNeighbors){
-            queue.push(childNode)
-        }
+      //   for(const childNode of unvisitedNeighbors){
+      //       queue.push(childNode)
+      //   }
        
 
      }
@@ -51,6 +51,7 @@ function updateUnvisitedNeighbors(node:any, grid:any) {
    const unvisitedNeighbors = getUnvisitedNeighbors(node, grid);
    for (const neighbor of unvisitedNeighbors) {
    //   neighbor.distance = node.distance + 1; // no need for an distance update 
+   animationTimeHelper(neighbor,  'queue',undefined)
      neighbor.previousNode = node;
    }
    return unvisitedNeighbors

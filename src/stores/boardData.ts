@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import {dijkstra,getNodesInShortestPathOrder} from '@/algorithms/dijkstra' 
 import {breadthFirstSearch} from '@/algorithms/breadthFirstSearch'
-import {resetAnimationPreviosTime} from '@/services/animationHelpers'
+import {resetAnimationPreviosTime,changeAnimationSpeed} from '@/services/animationHelpers'
 import type { NodeObjectType} from '@/types/algorithms'
 interface ColumnInfo{
     status:string
@@ -87,30 +87,6 @@ export const useBoardData = defineStore({
       this.draggedNodeStatus= node
     },
 
-  //  getInitialGrid  () {
-  //     const grid = [];
-  //     for (let row = 0; row < 20; row++) {
-  //       const currentRow = [];
-  //       for (let col = 0; col < 50; col++) {
-  //         currentRow.push(this.createNode(col, row));
-  //       }
-  //       grid.push(currentRow);
-  //     }
-  //     return grid;
-  //   },
-    
-  //   createNode (col:number, row:number)  {
-  //     return {
-  //       col,
-  //       row,
-  //       isStart: row === this.START_NODE_ROW && col === this.START_NODE_COL,
-  //       isFinish: row === this.FINISH_NODE_ROW && col === this.FINISH_NODE_COL,
-  //       distance: Infinity,
-  //       isVisited: false,
-  //       isWall: false,
-  //       previousNode: null,
-  //     };
-  //   }, // old functioning
 
 
 
@@ -289,6 +265,13 @@ const algorithmsList:{[key:string]:()=>{animationTimeAlgorithm:number,animationT
 // after the algorithm has made a path change a status of the board on hasPath variable
     this.changeBoardPathStatus(true)
     
+  },
+  activateSpeedFromList(selectedSpeed:string){
+       
+
+    changeAnimationSpeed(selectedSpeed)
+
+  
   },
 
   clearWallsAndWeights(){

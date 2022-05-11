@@ -1,6 +1,6 @@
 
 <script setup lang="ts">
-import {ref,onMounted,reactive , watchEffect} from 'vue'
+import {ref,onMounted,reactive , watchEffect,watch} from 'vue'
 import BoardColumn from '../components/BoardColumn.vue'
 import BoardRow from '../components/BoardRow.vue'
 import {useOptions} from '../stores/options'
@@ -15,7 +15,7 @@ const boardDataStore = useBoardData()
 //  const animationStore = useAnimationHelper()
 
 
-
+const selectedSpeed = ref(optionsStore.$state.selectedSpeed)
 
 
 const algorithmSelected =reactive({
@@ -78,28 +78,22 @@ function activateAnAlghorithmFromList(){
   const selectedAlgorithm = optionsStore.$state.selectedAlgorithm
   boardDataStore.activateAnAlghorithmFromList(selectedAlgorithm)
  
-//   // first clear the path if the path is dirty :))
-//   // boardDataStore.clearPath()
-//   if(boardDataStore.boardHasPath){
-//           // clear path but not the walls added if an previous algorithm has already made a path 
-//           boardDataStore.clearPath()
-          
 
-//   }
-
-//     const algorithmsList:{[key:string]:()=>void} = {
-//             Dijkstra:()=>{
-//                     boardDataStore.visualizeDjkstra()
-//             }
-//     }
-   
-//         algorithmsList[selectedAlgorithm]() 
-
-//  // after the algorithm has made a path change a status of the board on hasPath variable
-//     boardDataStore.changeBoardPathStatus(true)
 
 }
 
+function activateSpeedFromList(){
+        // selectedSpeed
+        
+        boardDataStore.activateSpeedFromList(selectedSpeed.value)
+}
+
+
+watchEffect(()=>{
+        optionsStore.$state.selectedSpeed
+        console.log('idk')
+        activateSpeedFromList()
+})
 
 function visualizeAlgorithm(){
         if( algorithmSelected.disabled){
