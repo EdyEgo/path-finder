@@ -17,7 +17,7 @@ export const useOptions = defineStore({
       }
     >{
       selectedAlgorithm:'No algorithm selected',
-      algorithms:['Dijkstra','Breadth-first Search','Depth-first Search'],
+      algorithms:['Dijkstra','BreadthFirstSearch','Depth-first Search'],
        selectedPattern:'No pattern selected',
        patterns:['Recursive Division','Recursive Division(vertical skew)'],
        selectedSpeed:'fast',

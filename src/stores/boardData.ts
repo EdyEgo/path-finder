@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import {dijkstra,getNodesInShortestPathOrder} from '@/algorithms/dijkstra' 
+import {breadthFirstSearch} from '@/algorithms/breadthFirstSearch'
 import {resetAnimationPreviosTime} from '@/services/animationHelpers'
 import type { NodeObjectType} from '@/types/algorithms'
 interface ColumnInfo{
@@ -156,20 +157,11 @@ export const useBoardData = defineStore({
  
 
   
-  visualizeDjkstra(noAnimation?:boolean){
+  visualizeDjkstra(startNode:NodeObjectType,finishNode:NodeObjectType,noAnimation?:boolean){
 
 
-    const grid = this.grid
-   
-   
-   
-   
-   
-  
-   
-   const startNode = grid[this.startPoint[0]][this.startPoint[1]];
-   const finishNode = grid[this.targetPoint[0]][this.targetPoint[1]];
-   const animationTimeAlgorithm =  dijkstra(grid, startNode, finishNode,noAnimation);
+    
+   const animationTimeAlgorithm =  dijkstra(this.grid, startNode, finishNode,noAnimation);
    const animationTimeShortesPath = getNodesInShortestPathOrder(finishNode,noAnimation);
  
        return {animationTimeAlgorithm,animationTimeShortesPath}
@@ -177,7 +169,12 @@ export const useBoardData = defineStore({
      
      },
   
+  visualizeBreadthFirstSearch(startNode:NodeObjectType,finishNode:NodeObjectType,noAnimation?:boolean){
+     const animationTimeAlgorithm = breadthFirstSearch(this.grid, startNode, finishNode,noAnimation)
+     const animationTimeShortesPath = 8
 
+     return {animationTimeAlgorithm,animationTimeShortesPath}
+  },
 
 
 
@@ -256,10 +253,17 @@ export const useBoardData = defineStore({
 
 }
 
+const startNode = this.grid[this.startPoint[0]][this.startPoint[1]];
+const finishNode = this.grid[this.targetPoint[0]][this.targetPoint[1]];
+
 const algorithmsList:{[key:string]:()=>{animationTimeAlgorithm:number,animationTimeShortesPath:number}} = {
         Dijkstra:()=>{
-               return this.visualizeDjkstra(noAnimation)
+               return this.visualizeDjkstra(startNode,finishNode,noAnimation)
+        },
+        BreadthFirstSearch:()=>{
+          return this.visualizeBreadthFirstSearch(startNode,finishNode,noAnimation)
         }
+
 }
   
 // make buttons inactive 
